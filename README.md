@@ -1,1 +1,3 @@
-# cs2-breakout-game
+# Breakout Game
+
+Now this is epic

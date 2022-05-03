@@ -1,0 +1,33 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		// {
+		// 	   "label": "Build the active target",
+      //       "type": "cmake",
+      //       "command": "build",
+		// 		"problemMatcher": ["$gcc"],
+      //       "group": {
+      //           "kind": "build",
+      //          //  "isDefault": true
+      //       }
+		// },
+
+		// {
+		// 	   "label": "Build the active target",
+      //       "type": "shell",
+      //       "command": "clear; cmake --build build | colorgcc;",
+		// 		"problemMatcher": ["$gcc"],
+      //       "group": {
+      //           "kind": "build",
+      //          //  "isDefault": true
+      //       }
+		// },
+
+		{
+			"label": "run",
+			"type": "shell",
+			"command": "clear; echo -e \"[started]\n\"; cd ${fileDirname}/bin/; ./breakout; echo -e \"\nexited: $?\"",
+			"problemMatcher": []
+		}
+	]
+}
