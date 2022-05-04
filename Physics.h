@@ -8,6 +8,7 @@
 struct Position
 {
 	Position(double xPos, double yPos);
+	Position();
 
 	double x;
 	double y;
