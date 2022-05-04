@@ -2,6 +2,7 @@
 bin/
 build/
 .cache/
+notes/
 
 # files
 scratchpad.txt
