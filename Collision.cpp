@@ -58,6 +58,11 @@ Size Collision::getHitbox() const
 }
 
 
+//dummy virtual function, derived classes don't need to implement this
+void Collision::update()
+{ }
+
+
 //***************************************************************************************************
 //friend functions
 //***************************************************************************************************
@@ -79,5 +84,11 @@ sf::RectangleShape drawHitbox(Collision &obj)
 	returnRect.setOutlineThickness(2);
 
 	return returnRect;
+}
+
+
+bool checkCollision(Collision *obj1, Collision *obj2)
+{
+
 }
 

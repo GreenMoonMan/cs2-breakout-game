@@ -35,6 +35,7 @@ class Position
 };
 
 
+//TODO move explanation into Position class
 //***************************************************************************************************
 /*
 *	translatePosition()
