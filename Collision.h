@@ -19,6 +19,8 @@ class Collision
 		double getY() const;
 		double getHbWidth() const;
 		double getHbHeight() const;
+		Position getPosition() const;
+		Size getHitbox() const;
 
 		//abstract function
 		// virtual void collisionAction(const Collision&) = 0;
@@ -26,10 +28,11 @@ class Collision
 		//friends
 		friend sf::RectangleShape drawHitbox(Collision& obj);
 
-	protected:
+		//TODO move into protected
 		Position _pos;
-		//hitbox size
-		double _width, _height;
+		Size _hitbox;
+
+	protected:
 };
 
 

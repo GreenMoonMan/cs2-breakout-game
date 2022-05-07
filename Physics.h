@@ -5,13 +5,33 @@
 #include <SFML/System/Vector2.hpp>
 
 
+
+class Size 
+{
+	public:
+		Size(double objectWidth, double objectHeight);
+		Size();
+
+		double width;
+		double height;
+
+		//transforms from in game size to screen size in pixels
+		sf::Vector2f transformToScreen() const;
+};
+
+
 class Position
 {
-	Position(double xPos, double yPos);
-	Position();
+	public:
+		Position(double xPos, double yPos);
+		Position();
 
-	double x;
-	double y;
+		double x;
+		double y;
+
+		//transforms from in game coordinates to screen coordinates
+		sf::Vector2f transformToScreen() const;
+		sf::Vector2f transformToScreen(const Size& objSize) const;
 };
 
 

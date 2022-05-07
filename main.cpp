@@ -9,6 +9,7 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
+#include <SFML/Window/WindowStyle.hpp>
 
 
 using namespace std;
@@ -16,7 +17,7 @@ using namespace std;
 
 int main()
 {
-	sf::RenderWindow renderWindow(sf::VideoMode(1920, 1080), "wow! much game!");
+	sf::RenderWindow renderWindow(sf::VideoMode(1920, 1080), "wow! much game!", sf::Style::Titlebar | sf::Style::Close);
 	sf::Event event;
 
 	renderWindow.setFramerateLimit(75);
@@ -27,7 +28,11 @@ int main()
 	rect.setOutlineThickness(3);
 	rect.setPosition(500, 500);
 
-	Collision col(100, 45, 200, 200);
+	Collision col(80, 45, 20, 20);
+
+	sf::RectangleShape hitbox = drawHitbox(col);
+	cout << hitbox.getSize().x << "\t" << hitbox.getSize().y << endl;
+
 
 	while(renderWindow.isOpen())
 	{
@@ -46,7 +51,7 @@ int main()
 
 		renderWindow.clear();
 		// renderWindow.draw(rect);
-		renderWindow.draw(drawHitbox(col));
+		renderWindow.draw(hitbox);
 		renderWindow.display();
 	}
 

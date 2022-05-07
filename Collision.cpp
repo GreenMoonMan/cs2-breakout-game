@@ -6,7 +6,7 @@
 
 //constructors
 Collision::Collision(double x, double y, double width, double height)
-: _pos(x, y), _width(width), _height(height)
+: _pos(x, y), _hitbox(width, height)
 { }
 
 
@@ -36,13 +36,25 @@ double Collision::getY() const
 
 double Collision::getHbWidth() const
 {
-	return _width;
+	return _hitbox.width;
 }
 
 
 double Collision::getHbHeight() const
 {
-	return _height;
+	return _hitbox.height;
+}
+
+
+Position Collision::getPosition() const
+{
+	return _pos;
+}
+
+
+Size Collision::getHitbox() const
+{
+	return _hitbox;
 }
 
 
@@ -52,18 +64,19 @@ double Collision::getHbHeight() const
 
 sf::RectangleShape drawHitbox(Collision &obj)
 {
-	sf::Vector2f hitBoxSize(obj._width, obj._height);
+	sf::Vector2f hitBoxSize = obj._hitbox.transformToScreen();
 	sf::RectangleShape returnRect(hitBoxSize);
 
-	Position screenPos = translatePosition(obj._pos, 1920, 1080);
-	returnRect.setPosition(screenPos.x, screenPos.y);
+	//move to correcto position
+	sf::Vector2f screenPos = obj._pos.transformToScreen(obj._hitbox);
+	returnRect.setPosition(screenPos);
 
 	//set fill color of hitbox to transperent
 	returnRect.setFillColor(sf::Color(0, 0, 0, 0));
 
 	//set up outline
 	returnRect.setOutlineColor(sf::Color::Red);
-	returnRect.setOutlineThickness(3);
+	returnRect.setOutlineThickness(2);
 
 	return returnRect;
 }
