@@ -21,7 +21,7 @@ class Collision
 		double getHbHeight() const;
 
 		//abstract function
-		virtual void collisionAction(const Collision&) = 0;
+		// virtual void collisionAction(const Collision&) = 0;
 
 		//friends
 		friend sf::RectangleShape drawHitbox(Collision& obj);

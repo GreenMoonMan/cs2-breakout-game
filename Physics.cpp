@@ -18,7 +18,7 @@ Position translatePosition(const Position& pos, const unsigned screenWidth, cons
 
 	//scale
 	returnPos.x = pos.x * screenWidth / gameConstants::MAX_X;
-	returnPos.y = pos.y * screenWidth / gameConstants::MAX_Y;
+	returnPos.y = pos.y * screenHeight / gameConstants::MAX_Y;
 
 	//transform y
 	returnPos.y = screenHeight - returnPos.y;

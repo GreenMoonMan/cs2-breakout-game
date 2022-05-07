@@ -5,7 +5,7 @@
 #include <SFML/System/Vector2.hpp>
 
 
-struct Position
+class Position
 {
 	Position(double xPos, double yPos);
 	Position();
