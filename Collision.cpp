@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/System/Clock.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
 
@@ -17,12 +18,27 @@ Collision::Collision(double x, double y)
 { }
 
 
+Collision::Collision(Position colPos)
+: pos(colPos), hitbox(0, 0)
+{ }
+
+
+Collision::Collision(Position colPos, Size hbSize)
+: pos(colPos), hitbox(hbSize)
+{ }
+
+
 Collision::Collision()
 : Collision(0, 0, 0, 0)
 { }
 
 
+Collision::~Collision()
+{ }
 
+
+
+//--------------------------------------------------------------------------------
 //getters
 double Collision::getX() const
 {
@@ -61,7 +77,7 @@ Size Collision::getHitbox() const
 
 
 //dummy virtual function, derived classes don't need to implement this
-void Collision::update()
+void Collision::update(const sf::Clock)
 { }
 
 
@@ -71,11 +87,11 @@ void Collision::update()
 
 sf::RectangleShape drawHitbox(Collision* obj)
 {
-	sf::Vector2f hitBoxSize = obj->hitbox.transformToScreen();
+	sf::Vector2f hitBoxSize = obj->getHitbox().transformToScreen();
 	sf::RectangleShape returnRect(hitBoxSize);
 
 	//move to correcto position
-	sf::Vector2f screenPos = obj->pos.transformToScreen(obj->hitbox);
+	sf::Vector2f screenPos = obj->getPosition().transformToScreen(obj->getHitbox());
 	returnRect.setPosition(screenPos);
 
 	//set fill color of hitbox to transperent

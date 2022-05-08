@@ -1,18 +1,22 @@
 #include "Collision.h"
 #include "Common.h"
 #include "Physics.h"
+#include "Paddle.h"
+
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/View.hpp>
+#include <SFML/System/Clock.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Window/WindowStyle.hpp>
 
-
 using namespace std;
+
 
 
 int main()
@@ -22,10 +26,9 @@ int main()
 
 	renderWindow.setFramerateLimit(75);
 
-	Collision col1(0, 11, 30, 20);
-	Collision col2(50, 40, 10, 30);
-	sf::RectangleShape hitbox1;
-	sf::RectangleShape hitbox2;
+	sf::Clock clock;
+
+	Paddle pad(Position(2.5, 0), Size(20, 5));
 
 
 	while(renderWindow.isOpen())
@@ -43,30 +46,13 @@ int main()
 		}
 
 
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			col1.pos.x += 0.5;
-		
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			col1.pos.x -= 0.5;
-			
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-			col1.pos.y += 0.5;
-
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-			col1.pos.y -= 0.5;
-
-		hitbox1 = drawHitbox(&col1);
-		hitbox2 = drawHitbox(&col2);
-		
-		if(checkCollision(&col1, &col2))
-		{
-			hitbox1.setOutlineColor(sf::Color::Blue);
-			hitbox2.setOutlineColor(sf::Color::Blue);
-		}
-
 		renderWindow.clear();
-		renderWindow.draw(hitbox1);
-		renderWindow.draw(hitbox2);
+
+		sf::Drawable* toDraw = pad.draw();
+		sf::RectangleShape* test = dynamic_cast<sf::RectangleShape*>(toDraw);
+		cout << test->getPosition().x << "\t" << test->getPosition().y << endl;
+		renderWindow.draw(*test);
+
 		renderWindow.display();
 	}
 

@@ -5,16 +5,21 @@
 #include "Common.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/System/Clock.hpp>
 
 
 class Collision
 {
 	public:
 		//constructors
+		//TODO make virtual at some point
 		Collision(double x, double y, double width, double height);
 		Collision(double x, double y);
+		Collision(Position colPos);
+		Collision(Position colPos, Size hbSize);
 		Collision();
-		// virtual ~Collision();
+
+		virtual ~Collision();
 
 		//getters
 		double getX() const;
@@ -26,22 +31,21 @@ class Collision
 
 		//implementation in derived classes is optional
 		//by default this function does nothing
-		virtual void update();
+		virtual void update(const sf::Clock);
 
-		//TODO make abstract
-		//abstract function
-		// virtual void collisionAction(const Collision*);
-		// virtual sf::Drawable* draw();
+		//abstract functions
+		virtual void collisionAction(Collision*) = 0;
+		virtual sf::Drawable* draw() = 0;
 
 		//friends
+		//TODO doesn't actually need to be friends?
 		friend sf::RectangleShape drawHitbox(Collision& obj);
 		friend bool checkCollision();
 
-		//TODO move into protected
-		Position pos;
-		Size hitbox;
 
 	protected:
+		Position pos;
+		Size hitbox;
 };
 
 
