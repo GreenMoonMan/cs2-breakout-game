@@ -17,21 +17,15 @@ using namespace std;
 
 int main()
 {
-	sf::RenderWindow renderWindow(sf::VideoMode(1920, 1080), "wow! much game!", sf::Style::Titlebar | sf::Style::Close);
+	sf::RenderWindow renderWindow(sf::VideoMode(gameConstants::SCREEN_WIDTH, gameConstants::SCREEN_HEIGHT), "wow! much game!", sf::Style::Titlebar | sf::Style::Close);
 	sf::Event event;
 
 	renderWindow.setFramerateLimit(75);
 
-	sf::RectangleShape rect(sf::Vector2f(200, 200));
-	rect.setFillColor(sf::Color(0, 0, 0, 0));
-	rect.setOutlineColor(sf::Color::Red);
-	rect.setOutlineThickness(3);
-	rect.setPosition(500, 500);
-
-	Collision col(80, 45, 20, 20);
-
-	sf::RectangleShape hitbox = drawHitbox(col);
-	cout << hitbox.getSize().x << "\t" << hitbox.getSize().y << endl;
+	Collision col1(0, 11, 30, 20);
+	Collision col2(50, 40, 10, 30);
+	sf::RectangleShape hitbox1;
+	sf::RectangleShape hitbox2;
 
 
 	while(renderWindow.isOpen())
@@ -49,9 +43,30 @@ int main()
 		}
 
 
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			col1._pos.x += 0.5;
+		
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			col1._pos.x -= 0.5;
+			
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+			col1._pos.y += 0.5;
+
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			col1._pos.y -= 0.5;
+
+		hitbox1 = drawHitbox(col1);
+		hitbox2 = drawHitbox(col2);
+		
+		if(checkCollision(&col1, &col2))
+		{
+			hitbox1.setOutlineColor(sf::Color::Blue);
+			hitbox2.setOutlineColor(sf::Color::Blue);
+		}
+
 		renderWindow.clear();
-		// renderWindow.draw(rect);
-		renderWindow.draw(hitbox);
+		renderWindow.draw(hitbox1);
+		renderWindow.draw(hitbox2);
 		renderWindow.display();
 	}
 

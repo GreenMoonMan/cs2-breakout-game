@@ -14,7 +14,7 @@ class Collision
 		Collision(double x, double y, double width, double height);
 		Collision(double x, double y);
 		Collision();
-		virtual ~Collision();
+		// virtual ~Collision();
 
 		//getters
 		double getX() const;
@@ -30,8 +30,8 @@ class Collision
 
 		//TODO make abstract
 		//abstract function
-		virtual void collisionAction(const Collision*);
-		virtual sf::Drawable* draw();
+		// virtual void collisionAction(const Collision*);
+		// virtual sf::Drawable* draw();
 
 		//friends
 		friend sf::RectangleShape drawHitbox(Collision& obj);
