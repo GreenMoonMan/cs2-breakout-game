@@ -38,15 +38,15 @@ class Collision
 		friend bool checkCollision();
 
 		//TODO move into protected
-		Position _pos;
-		Size _hitbox;
+		Position pos;
+		Size hitbox;
 
 	protected:
 };
 
 
 //functions
-sf::RectangleShape drawHitbox(Collision& obj);
+sf::RectangleShape drawHitbox(Collision* obj);
 bool checkCollision(Collision* obj1, Collision* obj2);
 
 

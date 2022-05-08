@@ -44,19 +44,19 @@ int main()
 
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			col1._pos.x += 0.5;
+			col1.pos.x += 0.5;
 		
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			col1._pos.x -= 0.5;
+			col1.pos.x -= 0.5;
 			
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-			col1._pos.y += 0.5;
+			col1.pos.y += 0.5;
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-			col1._pos.y -= 0.5;
+			col1.pos.y -= 0.5;
 
-		hitbox1 = drawHitbox(col1);
-		hitbox2 = drawHitbox(col2);
+		hitbox1 = drawHitbox(&col1);
+		hitbox2 = drawHitbox(&col2);
 		
 		if(checkCollision(&col1, &col2))
 		{
