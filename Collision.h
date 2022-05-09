@@ -12,7 +12,6 @@ class Collision
 {
 	public:
 		//constructors
-		//TODO make virtual at some point
 		Collision(double x, double y, double width, double height);
 		Collision(double x, double y);
 		Collision(Position colPos);

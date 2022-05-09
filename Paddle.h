@@ -26,7 +26,7 @@ class Paddle : public Collision
 		
 		//redefinitions
 		virtual void update(const sf::Clock clock) override;
-		virtual void collisionAction(Collision*) override;
+		virtual void collisionAction(Collision* otherObj) override;
 		virtual sf::Drawable* draw() override;
 		
 	

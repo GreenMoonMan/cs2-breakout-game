@@ -1,4 +1,5 @@
 #include "Paddle.h"
+#include "Wall.h"
 #include "Collision.h"
 #include "Common.h"
 #include "Physics.h"
@@ -62,8 +63,31 @@ void Paddle::update(const sf::Clock clock)
 
 
 //dummy function, does nothing
-void Paddle::collisionAction(Collision*)
-{ }
+void Paddle::collisionAction(Collision* otherObj)
+{ 
+	//stop at sides of walls
+	Wall* wallPtr = dynamic_cast<Wall*>(otherObj);
+
+	if(wallPtr != nullptr)
+	{
+		Wall::Side colSide = wallPtr->getSide();
+
+		//stop movment
+		_velocity = 0;
+
+		if(colSide == Wall::LEFT)
+		{
+			//stop at right side of the screen
+			pos.x = _paddleSize.width / 2;
+		}
+
+		else if(colSide == Wall::RIGHT)
+		{
+			//keep postion at left side of screen
+			pos.x = gameConstants::MAX_X - _paddleSize.width / 2;
+		}
+	}
+}
 
 
 sf::Drawable* Paddle::draw()
