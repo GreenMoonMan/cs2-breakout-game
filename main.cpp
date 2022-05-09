@@ -28,7 +28,7 @@ int main()
 
 	sf::Clock clock;
 
-	Paddle pad(Position(2.5, 0), Size(20, 5));
+	Paddle pad(Size(20, 5));
 
 
 	while(renderWindow.isOpen())
@@ -46,12 +46,21 @@ int main()
 		}
 
 
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			pad.move(40);
+		}
+
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			pad.move(-40);
+
+
 		renderWindow.clear();
 
+		pad.update(clock);
+		clock.restart();
 		sf::Drawable* toDraw = pad.draw();
-		sf::RectangleShape* test = dynamic_cast<sf::RectangleShape*>(toDraw);
-		cout << test->getPosition().x << "\t" << test->getPosition().y << endl;
-		renderWindow.draw(*test);
+		renderWindow.draw(*toDraw);
 
 		renderWindow.display();
 	}

@@ -1,5 +1,8 @@
 #include "Paddle.h"
 #include "Collision.h"
+#include "Common.h"
+#include "Physics.h"
+
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Clock.hpp>
@@ -9,12 +12,21 @@
 
 //constructors
 Paddle::Paddle(Position paddlePos, Size paddleSize)
-: Collision(paddlePos, paddleSize), _velocity(0),
+: Collision(paddlePos, paddleSize),
+	_velocity(0), _paddleSize(hitbox),
 	_paddleShape(new sf::RectangleShape(sf::Vector2f(paddleSize.transformToScreen())))
 { 
-	//TODO this may not even be neccessary since it is calculated in the draw action
-	_paddleShape->setPosition(paddlePos.transformToScreen());
-	_paddleShape->setFillColor(sf::Color::Green);
+	//default color
+	_paddleShape->setFillColor(sf::Color::White);
+}
+
+
+Paddle::Paddle(Size paddleSize)
+: Paddle(Position(), paddleSize)
+{
+	//change position to the bottom center of the screen
+	pos.x = gameConstants::MAX_X/2.0;
+	pos.y = _paddleSize.height/2.0;
 }
 
 
@@ -28,6 +40,12 @@ Paddle::~Paddle()
 
 //--------------------------------------------------------------------------------
 //methods
+void Paddle::setColor(const sf::Color& color)
+{
+	_paddleShape->setFillColor(color);
+}
+
+
 void Paddle::move(double velocity)
 {
 	_velocity = velocity;
@@ -39,6 +57,7 @@ void Paddle::move(double velocity)
 void Paddle::update(const sf::Clock clock)
 {
 	pos.x += _velocity * clock.getElapsedTime().asSeconds();
+	_velocity = 0;
 }
 
 
@@ -49,6 +68,7 @@ void Paddle::collisionAction(Collision*)
 
 sf::Drawable* Paddle::draw()
 {
+	_paddleShape->setPosition(pos.transformToScreen(_paddleSize));
 	return _paddleShape;
 }
 
