@@ -62,18 +62,14 @@ void Paddle::update(const sf::Clock clock)
 }
 
 
-//dummy function, does nothing
 void Paddle::collisionAction(Collision* otherObj)
 { 
-	//stop at sides of walls
+	//if the paddle has hit the sides of the walls, stop
 	Wall* wallPtr = dynamic_cast<Wall*>(otherObj);
 
 	if(wallPtr != nullptr)
 	{
 		Wall::Side colSide = wallPtr->getSide();
-
-		//stop movment
-		_velocity = 0;
 
 		if(colSide == Wall::LEFT)
 		{
@@ -83,7 +79,7 @@ void Paddle::collisionAction(Collision* otherObj)
 
 		else if(colSide == Wall::RIGHT)
 		{
-			//keep postion at left side of screen
+			//stop at left side of screen
 			pos.x = gameConstants::MAX_X - _paddleSize.width / 2;
 		}
 	}

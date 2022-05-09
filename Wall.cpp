@@ -63,13 +63,15 @@ Wall::Side Wall::getSide() const
 //redefinitions
 
 //empty
-void collisionAction(Collision*)
-{ }
+void Wall::collisionAction(Collision*)
+{ 
+
+}
 
 
-sf::Drawable* draw()
+sf::Drawable* Wall::draw()
 {
-	
+	return _dummyRect;
 }
 
 

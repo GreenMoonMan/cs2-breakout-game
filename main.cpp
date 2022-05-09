@@ -2,6 +2,7 @@
 #include "Common.h"
 #include "Physics.h"
 #include "Paddle.h"
+#include "Wall.h"
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Drawable.hpp>
@@ -29,6 +30,7 @@ int main()
 	sf::Clock clock;
 
 	Paddle pad(Size(20, 5));
+	Wall walls[4] = {Wall(Wall::LEFT), Wall(Wall::RIGHT), Wall(Wall::TOP), Wall(Wall::BOTTOM)};
 
 
 	while(renderWindow.isOpen())
@@ -53,6 +55,16 @@ int main()
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			pad.move(-40);
+		
+		
+		//check for wall collisions
+		for(int i = 0; i < 4; i++)
+		{
+			if(checkCollision(&pad, &walls[i]))
+			{
+				pad.collisionAction(&walls[i]);
+			}
+		}
 
 
 		renderWindow.clear();
