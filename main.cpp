@@ -3,6 +3,7 @@
 #include "Physics.h"
 #include "Paddle.h"
 #include "Wall.h"
+#include "Ball.h"
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Drawable.hpp>
@@ -25,11 +26,13 @@ int main()
 	sf::RenderWindow renderWindow(sf::VideoMode(gameConstants::SCREEN_WIDTH, gameConstants::SCREEN_HEIGHT), "wow! much game!", sf::Style::Titlebar | sf::Style::Close);
 	sf::Event event;
 
-	renderWindow.setFramerateLimit(75);
+	// renderWindow.setFramerateLimit(75*2);
+	renderWindow.setVerticalSyncEnabled(true);
 
 	sf::Clock clock;
 
 	Paddle pad(Size(20, 5));
+	Ball ball(4, 60, 60);
 	Wall walls[4] = {Wall(Wall::LEFT), Wall(Wall::RIGHT), Wall(Wall::TOP), Wall(Wall::BOTTOM)};
 
 
@@ -47,14 +50,15 @@ int main()
 			}
 		}
 
+		renderWindow.clear();
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			pad.move(40);
+			pad.move(70);
 		}
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			pad.move(-40);
+			pad.move(-70);
 		
 		
 		//check for wall collisions
@@ -64,16 +68,35 @@ int main()
 			{
 				pad.collisionAction(&walls[i]);
 			}
+
+			if(checkCollision(&ball, &walls[i]))
+			{
+				ball.collisionAction(&walls[i]);
+			}
+		}
+
+		if(checkCollision(&ball, &pad))
+		{
+			ball.collisionAction(&pad);
 		}
 
 
-		renderWindow.clear();
 
 		pad.update(clock);
-		clock.restart();
+		ball.update(clock);
+
 		sf::Drawable* toDraw = pad.draw();
 		renderWindow.draw(*toDraw);
+		renderWindow.draw(*ball.draw());
+		renderWindow.draw(drawHitbox(&pad));
+		renderWindow.draw(drawHitbox(&ball));
 
+		for(int i = 0; i < 4; i++)
+		{
+			renderWindow.draw(drawHitbox(&walls[i]));
+		}
+
+		clock.restart();
 		renderWindow.display();
 	}
 

@@ -6,7 +6,7 @@ file(GLOB codeFiles *.cpp)
 
 
 set(CMAKE_CXX_STANDARD, 17)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -Wextra")
 
 # set color output
 # set(ENV{GCC_COLORS} "error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01")
