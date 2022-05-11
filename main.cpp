@@ -4,6 +4,7 @@
 #include "Paddle.h"
 #include "Wall.h"
 #include "Ball.h"
+#include "Block.h"
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Drawable.hpp>
@@ -33,6 +34,7 @@ int main()
 
 	Paddle pad(Size(20, 5));
 	Ball ball(4, 60, 60);
+	Block block(Position(50, 50), Size(20, 10), 20);
 	Wall walls[4] = {Wall(Wall::LEFT), Wall(Wall::RIGHT), Wall(Wall::TOP), Wall(Wall::BOTTOM)};
 
 
@@ -80,6 +82,13 @@ int main()
 			ball.collisionAction(&pad);
 		}
 
+		//collison with the ball and block	
+		if(checkCollision(&ball, &block))
+		{
+			ball.collisionAction(&block);
+			block.collisionAction(&ball);
+		}
+
 
 
 		pad.update(clock);
@@ -88,8 +97,10 @@ int main()
 		sf::Drawable* toDraw = pad.draw();
 		renderWindow.draw(*toDraw);
 		renderWindow.draw(*ball.draw());
+		renderWindow.draw(*block.draw());
 		renderWindow.draw(drawHitbox(&pad));
 		renderWindow.draw(drawHitbox(&ball));
+		renderWindow.draw(drawHitbox(&block));
 
 		for(int i = 0; i < 4; i++)
 		{
