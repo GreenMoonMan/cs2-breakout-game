@@ -42,6 +42,8 @@ class Ball : public Collision
 		sf::CircleShape* _ballShape;
 
 		//functions
+		//changes angle of the ball (in degrees)
+		void changeDirection(double angle);
 		sf::Vector2f hitboxOverlap(Collision* obj1, Collision* obj2);
 };
 

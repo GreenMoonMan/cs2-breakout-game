@@ -1,12 +1,18 @@
 #include "Ball.h"
 #include "Collision.h"
+#include "Common.h"
 #include "Physics.h"
+#include "Paddle.h"
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <cstddef>
 #include <cmath>
+#include <math.h>
 #include <string>
+
+
+using namespace std;
 
 
 Ball::Ball(double diameter, double xVel, double yVel)
@@ -49,18 +55,42 @@ void Ball::collisionAction(Collision* otherObj)
 
 	//hits the side
 	//and prevent hitting the same object twice
-	if(overlap.x < overlap.y && _prevXCol != otherObj)
+	if(overlap.x <=overlap.y && _prevXCol != otherObj)
 	{
 		//"bounce" sideways
 		_xVel *= -1;
 		_prevXCol = otherObj;
 	}
 
-	else if(overlap.x > overlap.y && _prevYCol != otherObj)
+	if(overlap.x >= overlap.y && _prevYCol != otherObj)
 	{
 		//"bounce" vertically
 		_yVel *= -1;
 		_prevYCol = otherObj;
+	}
+
+
+	//------------------------------------------------------------
+	//paddle collisions
+
+	Paddle* paddlePtr = dynamic_cast<Paddle*>(otherObj);
+
+	//check if the ball hit the paddle
+	if(paddlePtr != nullptr)
+	{
+		//the angle of deflection of the ball is proportional to how off-center the hit of the ball was
+
+		//find where on the paddle the ball hit
+		//with a positive distance to the left
+		double hitDistance = paddlePtr->getPosition().x - pos.x;
+
+		//scale from -1 to 1, having a magnitude of 1 if it hits the edge of the paddle
+		hitDistance /= paddlePtr->getHitbox().width + hitbox.width;
+
+		//multiply by the angle to give deflection angle
+		cout << "old speed: " << sqrt(_xVel*_xVel + _yVel*_yVel) << endl;
+		changeDirection(gameConstants::MAX_BALL_PADDLE_DEFLECTION * hitDistance);
+		cout << "new speed: " << sqrt(_xVel*_xVel + _yVel*_yVel) << endl;
 	}
 }
 
@@ -75,6 +105,17 @@ sf::Drawable* Ball::draw()
 
 //--------------------------------------------------------------------------------
 //private methods
+
+//FIXME ball slows down after repeated hits
+void Ball::changeDirection(double angle)
+{
+	//change angle to radians
+	angle *= M_PI/180.0;
+
+	_xVel = _xVel * std::cos(angle) - _yVel * std::sin(angle);
+	_yVel = _yVel * std::cos(angle) + _xVel* std::sin(angle);
+}
+
 
 sf::Vector2f Ball::hitboxOverlap(Collision* obj1, Collision* obj2)
 {

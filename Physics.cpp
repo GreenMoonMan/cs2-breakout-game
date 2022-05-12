@@ -1,6 +1,11 @@
 #include "Physics.h"
 #include "Common.h"
+
 #include <SFML/System/Vector2.hpp>
+#include <cmath>
+
+
+using namespace std;
 
 
 //***************************************************************************************************
@@ -74,6 +79,45 @@ sf::Vector2f Position::transformToScreen(const Size& objSize) const
 
 	return returnVect;
 }
+
+
+//***************************************************************************************************
+//PolarVector class
+//***************************************************************************************************
+
+// PolarVector::PolarVector(double mag, double theta)
+// : magnitude(mag), angle(theta)
+// { }
+
+
+// PolarVector::PolarVector()
+// : PolarVector(0, 0)
+// { }
+
+
+// //transforms
+// void PolarVector::fromCartesian(double x, double y)
+// {
+	
+// }
+
+
+// void PolarVector::fromCartesian(sf::Vector2f vect)
+// {
+
+// }
+
+
+// sf::Vector2f PolarVector::toCartesian() const
+// {
+// 	sf::Vector2f returnVect;
+
+// 	returnVect.x = magnitude * cos(angle);
+// 	returnVect.y = magnitude * sin(angle);
+
+// 	return returnVect;
+// }
+
 
 
 //***************************************************************************************************

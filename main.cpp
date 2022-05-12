@@ -32,7 +32,7 @@ int main()
 
 	sf::Clock clock;
 
-	Paddle pad(Size(20, 5));
+	Paddle pad(Size(20, 1.5));
 	Ball ball(4, 60, 60);
 	Block block(Position(50, 50), Size(20, 10), 20);
 	Wall walls[4] = {Wall(Wall::LEFT), Wall(Wall::RIGHT), Wall(Wall::TOP), Wall(Wall::BOTTOM)};
@@ -56,11 +56,11 @@ int main()
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			pad.move(70);
+			pad.move(80);
 		}
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			pad.move(-70);
+			pad.move(-80);
 		
 		
 		//check for wall collisions

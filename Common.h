@@ -22,6 +22,10 @@ namespace gameConstants
 	const double BLOCKS_HEIGHT = 10;
 	const double BLOCKS_MIN_WIDTH = 10;
 	const double BLOCKS_MAX_WIDTH = 20;
+
+	//paddle
+	//in degrees
+	const double MAX_BALL_PADDLE_DEFLECTION = 40;
 }
 
 #endif
