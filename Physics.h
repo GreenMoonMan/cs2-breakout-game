@@ -35,19 +35,20 @@ class Position
 };
 
 
-// class PolarVector
-// {
-// 	public:
-// 		PolarVector(double mag, double theta);
-// 		PolarVector();
+//FIXME non of this actually works
+class PolarVector
+{
+	public:
+		PolarVector(double mag, double theta);
+		PolarVector();
 
-// 		double magnitude;
-// 		double angle;
+		double magnitude;
+		double angle;
 
-// 		void fromCartesian(double x, double y);
-// 		void fromCartesian(sf::Vector2f vect);
-// 		sf::Vector2f toCartesian() const;
-// };
+		void fromCartesian(double x, double y);
+		void fromCartesian(sf::Vector2f vect);
+		sf::Vector2f toCartesian() const;
+};
 
 
 //TODO move explanation into Position class

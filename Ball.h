@@ -16,6 +16,7 @@ class Ball : public Collision
 		//TODO fix to add initial positon
 		//maybe have the velocity as a different function
 		Ball(double diameter, double xVel, double yVel);
+		Ball(double diameter, PolarVector initialVelocity);
 		Ball(double diameter);
 		virtual ~Ball();
 

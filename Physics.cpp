@@ -85,38 +85,43 @@ sf::Vector2f Position::transformToScreen(const Size& objSize) const
 //PolarVector class
 //***************************************************************************************************
 
-// PolarVector::PolarVector(double mag, double theta)
-// : magnitude(mag), angle(theta)
-// { }
+PolarVector::PolarVector(double mag, double theta)
+: magnitude(mag), angle(theta)
+{ }
 
 
-// PolarVector::PolarVector()
-// : PolarVector(0, 0)
-// { }
+PolarVector::PolarVector()
+: PolarVector(0, 0)
+{ }
 
 
-// //transforms
-// void PolarVector::fromCartesian(double x, double y)
-// {
-	
-// }
+//transforms
+void PolarVector::fromCartesian(double x, double y)
+{
+	//get angle
+	angle = std::atan2(y, x);
+	//convert to degrees
+	angle *= 180 / M_PI;
+
+	magnitude = std::sqrt(x*x + y*y);
+}
 
 
-// void PolarVector::fromCartesian(sf::Vector2f vect)
-// {
+void PolarVector::fromCartesian(sf::Vector2f vect)
+{
+	fromCartesian(vect.x, vect.y);
+}
 
-// }
 
+sf::Vector2f PolarVector::toCartesian() const
+{
+	sf::Vector2f returnVect;
 
-// sf::Vector2f PolarVector::toCartesian() const
-// {
-// 	sf::Vector2f returnVect;
+	returnVect.x = magnitude * cos(angle);
+	returnVect.y = magnitude * sin(angle);
 
-// 	returnVect.x = magnitude * cos(angle);
-// 	returnVect.y = magnitude * sin(angle);
-
-// 	return returnVect;
-// }
+	return returnVect;
+}
 
 
 

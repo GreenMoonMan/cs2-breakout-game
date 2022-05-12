@@ -26,6 +26,16 @@ Ball::Ball(double diameter, double xVel, double yVel)
 }
 
 
+Ball::Ball(double diameter, PolarVector initialVelocity)
+: Ball(diameter, 0, 0)
+{
+	sf::Vector2f cartesianVel = initialVelocity.toCartesian();
+
+	_xVel = cartesianVel.x;
+	_yVel = cartesianVel.y;
+}
+
+
 Ball::Ball(double diameter)
 :	Ball(diameter, 0, 0)
 { }
@@ -87,9 +97,17 @@ void Ball::collisionAction(Collision* otherObj)
 		//scale from -1 to 1, having a magnitude of 1 if it hits the edge of the paddle
 		hitDistance /= paddlePtr->getHitbox().width + hitbox.width;
 
+		//TODO clean this up a bit and remove debug
 		//multiply by the angle to give deflection angle
 		cout << "old speed: " << sqrt(_xVel*_xVel + _yVel*_yVel) << endl;
 		changeDirection(gameConstants::MAX_BALL_PADDLE_DEFLECTION * hitDistance);
+		// PolarVector vel;
+		// vel.fromCartesian(_xVel, _yVel);
+		// vel.angle += gameConstants::MAX_BALL_PADDLE_DEFLECTION * hitDistance;
+		// sf::Vector2f temp = vel.toCartesian();
+		// _xVel = temp.x;
+		// _yVel = temp.y;
+
 		cout << "new speed: " << sqrt(_xVel*_xVel + _yVel*_yVel) << endl;
 	}
 }

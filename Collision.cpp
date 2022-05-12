@@ -107,6 +107,13 @@ sf::RectangleShape drawHitbox(Collision* obj)
 
 bool checkCollision(Collision *obj1, Collision *obj2)
 {
+	//make sure that an object can't collide with itself
+	if(obj1 == obj2)
+	{
+		return false;
+	}
+
+
 	double distanceX = std::abs(obj1->getPosition().x - obj2->getPosition().x);
 	double distanceY = std::abs(obj1->getPosition().y - obj2->getPosition().y);
 	double avWidth = (obj1->getHitbox().width + obj2->getHitbox().width)/2;
