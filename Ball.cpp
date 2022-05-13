@@ -82,7 +82,8 @@ void Ball::collisionAction(Collision* otherObj)
 
 	//------------------------------------------------------------
 	//paddle collisions
-	//FIXME prevent the ball from colliding more than once
+
+	//FIXME prevent multiple collisions with the paddle
 
 	Paddle* paddlePtr = dynamic_cast<Paddle*>(otherObj);
 

@@ -1,9 +1,14 @@
 #include "BreakoutGame.h"
 #include "Ball.h"
+#include "Block.h"
 #include "Collision.h"
+#include "Common.h"
 #include "Paddle.h"
+#include "Physics.h"
 #include "Wall.h"
+
 #include <SFML/Window/Keyboard.hpp>
+#include <cmath>
 
 
 BreakoutGame::BreakoutGame(sf::RenderWindow& window)
@@ -44,7 +49,27 @@ void BreakoutGame::setup()
 	ball = new Ball(2, 55, 55);
 	gameObjects.push_back(ball);
 
+	//test creation of blocks
+	for(int row = 0; row < 3; row++)
+	{
+		double avWidth = gameConstants::MAX_X / 6;
+		double usedWidth = 0;
 
+		//create everything except the last object
+		for(int i = 0; i < 6; i++)
+		{
+			double width = avWidth;
+			double height = gameConstants::BLOCKS_HEIGHT;
+			double yPos = 50 + row * gameConstants::BLOCKS_HEIGHT;
+
+			Position pos(usedWidth + width/2, yPos);
+
+			Block* blockPtr = new Block(pos, Size(width, height), 0);
+			gameObjects.push_back(blockPtr);
+
+			usedWidth += width;
+		}
+	}
 }
 
 
