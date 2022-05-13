@@ -24,6 +24,11 @@ class Block : public Collision
 		virtual void collisionAction(Collision* otherObj) override;
 		virtual sf::Drawable* draw() override;
 
+		//static attributes
+		//probably move into private later
+		static int numOfBlocks;
+		static int blocksDestroyed;
+
 
 	private:
 		double _speedMultiplier;

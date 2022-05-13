@@ -3,12 +3,18 @@
 #include "Collision.h"
 #include <cstddef>
 
+
+int Block::numOfBlocks = 0;
+int Block::blocksDestroyed = 0;
+
+//--------------------------------------------------------------------------------
+
 Block::Block(Position position, Size size, double multiplier)
 :	Collision(position, size),
 	_speedMultiplier(multiplier), _destroyed(false),
 	_blockShape(new sf::RectangleShape(hitbox.transformToScreen()))
 {
-
+	numOfBlocks++;
 }
 
 
@@ -51,10 +57,12 @@ void Block::collisionAction(Collision* otherObj)
 {
 	Ball* ballPtr = dynamic_cast<Ball*>(otherObj);
 
+	//if a ball collides with the block
 	if(ballPtr != nullptr)
 	{
 		//ball destorys the block
 		_destroyed = true;
+		blocksDestroyed++;
 
 		//move the block off screen so that it doens't interfere with the ball
 		pos.x = -hitbox.width;

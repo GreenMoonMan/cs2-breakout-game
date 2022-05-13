@@ -15,7 +15,7 @@
 class BreakoutGame
 {
 	public:
-		BreakoutGame(sf::RenderWindow&);
+		BreakoutGame(sf::RenderWindow& window);
 		~BreakoutGame();
 
 		//the main game
@@ -29,19 +29,20 @@ class BreakoutGame
 
 
 	private:
-		sf::RenderWindow& renderWindow;
+		static const int NUM_OF_WALLS = 3;
 
-		//game objects
-		//all game objects are stored in this vector
-		std::vector<Collision*> gameObjects;
-		Ball* ball;
-		Paddle* paddle;
-		const int NUM_OF_WALLS = 3;
-		Wall** walls;
+		sf::RenderWindow& renderWindow;
 
 		//game data
 		int score;
 		bool gameOver;
+
+		//game objects
+		//all game objects are stored in this polymorhpic vector
+		std::vector<Collision*> gameObjects;
+		Wall* walls[NUM_OF_WALLS];
+		Paddle* paddle;
+		Ball* ball;
 };
 
 
