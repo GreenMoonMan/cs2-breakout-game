@@ -14,9 +14,9 @@ namespace gameConstants
 	const double MAX_X = 160;
 	const double MAX_Y = 90;
 
-	const unsigned SCREEN_WIDTH = 1280;
+	const unsigned SCREEN_WIDTH = 1600;
 	// const unsigned SCREEN_WIDTH = 1920;
-	const unsigned SCREEN_HEIGHT = 720;
+	const unsigned SCREEN_HEIGHT = 900;
 	// const unsigned SCREEN_HEIGHT = 1080;
 
 	//blocks
@@ -27,7 +27,7 @@ namespace gameConstants
 
 	//paddle
 	//in degrees
-	const double MAX_BALL_PADDLE_DEFLECTION = 20;
+	const double MAX_BALL_PADDLE_DEFLECTION = 30;
 }
 
 #endif

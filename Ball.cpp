@@ -101,6 +101,7 @@ void Ball::collisionAction(Collision* otherObj)
 
 		//TODO clean this up a bit and remove debug
 		//multiply by the angle to give deflection angle
+		cout << "angle: " << gameConstants::MAX_BALL_PADDLE_DEFLECTION*hitDistance << endl;
 		cout << "old speed: " << sqrt(_xVel*_xVel + _yVel*_yVel) << endl;
 		changeDirection(gameConstants::MAX_BALL_PADDLE_DEFLECTION * hitDistance);
 		// PolarVector vel;

@@ -40,6 +40,8 @@ BreakoutGame::~BreakoutGame()
 
 void BreakoutGame::setup()
 {
+	//TODO rewrite ball launch and how blocks are created
+
 	//create paddle
 	paddle = new Paddle(Size(30, 1));
 	gameObjects.push_back(paddle);
@@ -114,6 +116,15 @@ void BreakoutGame::run(const sf::Clock& clock)
 	{
 		obj->update(clock);
 	}
+
+	//update score
+	score = Block::blocksDestroyed;
+	
+	//check for game over
+	if(ball->getPosition().y < 0 || Block::blocksDestroyed == Block::numOfBlocks)
+	{
+		gameOver = true;
+	}
 }
 
 
@@ -139,7 +150,7 @@ bool BreakoutGame::isGameOver()
 }
 
 
-bool BreakoutGame::getScore()
+int BreakoutGame::getScore()
 {
 	return score;
 }

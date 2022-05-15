@@ -25,7 +25,7 @@ class BreakoutGame
 
 		//other methods
 		bool isGameOver();
-		bool getScore();
+		int getScore();
 
 
 	private:

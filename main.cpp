@@ -52,9 +52,22 @@ int main()
 		}
 
 		renderWindow.clear();
+		static bool scoreFlag = false;
 
-		game.run(clock);
+		if(!game.isGameOver())
+		{
+			game.run(clock);
+		}
+
+		else if(!scoreFlag)
+		{
+			cout << "score: " << game.getScore() << endl;
+			scoreFlag = true;
+		}
+
+
 		game.display();
+
 		clock.restart();
 		renderWindow.display();
 	}
