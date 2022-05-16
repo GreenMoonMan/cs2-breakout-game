@@ -48,13 +48,15 @@ void BreakoutGame::setup()
 
 	//create ball
 	//dummy lauch value, change to be random later
-	ball = new Ball(2, 55, 55);
+	//was 55, 55
+	ball = new Ball(2, 0, 100);
 	gameObjects.push_back(ball);
 
+	double avWidth = gameConstants::MAX_X / 6;
+	
 	//test creation of blocks
-	for(int row = 0; row < 3; row++)
+	for(int row = 0; row < 2; row++)
 	{
-		double avWidth = gameConstants::MAX_X / 6;
 		double usedWidth = 0;
 
 		//create everything except the last object
@@ -66,11 +68,29 @@ void BreakoutGame::setup()
 
 			Position pos(usedWidth + width/2, yPos);
 
-			Block* blockPtr = new Block(pos, Size(width, height), 0);
+			Block* blockPtr = new Block(pos, Size(width, height), 78);
 			gameObjects.push_back(blockPtr);
 
 			usedWidth += width;
 		}
+	}
+
+
+	double usedWidth = 0;
+
+	//create everything except the last object
+	for(int i = 0; i < 6; i++)
+	{
+		double width = avWidth;
+		double height = gameConstants::BLOCKS_HEIGHT;
+		double yPos = 50 + 2 * gameConstants::BLOCKS_HEIGHT;
+
+		Position pos(usedWidth + width/2, yPos);
+
+		Block* blockPtr = new Block(pos, Size(width, height), 200);
+		gameObjects.push_back(blockPtr);
+
+		usedWidth += width;
 	}
 }
 
@@ -98,6 +118,17 @@ void BreakoutGame::run(const sf::Clock& clock)
 		}
 	}
 
+	//add bottomwall if debug
+	if(GAMEPLAY_DEBUG)
+	{
+		Wall tempWall = Wall(Wall::BOTTOM);
+		
+		if(checkCollision(ball, &tempWall))
+		{
+			ball->collisionAction(&tempWall);
+		}
+	}
+
 
 	//key presses
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -121,7 +152,7 @@ void BreakoutGame::run(const sf::Clock& clock)
 	score = Block::blocksDestroyed;
 	
 	//check for game over
-	if(ball->getPosition().y < 0 || Block::blocksDestroyed == Block::numOfBlocks)
+	if(ball->getPosition().y + ball->getHitbox().height/2 < 0 || Block::blocksDestroyed == Block::numOfBlocks)
 	{
 		gameOver = true;
 	}
@@ -135,7 +166,11 @@ void BreakoutGame::display()
 	for(Collision* object : gameObjects)
 	{
 		renderWindow.draw(*object->draw());
-		renderWindow.draw(drawHitbox(object));
+
+		if(GAMEPLAY_DEBUG)
+		{
+			renderWindow.draw(drawHitbox(object));
+		}
 	}
 }
 

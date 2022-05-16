@@ -35,7 +35,6 @@ class Position
 };
 
 
-//FIXME non of this actually works
 class PolarVector
 {
 	public:

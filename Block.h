@@ -11,13 +11,13 @@
 class Block : public Collision
 {
 	public:
-		Block(Position position, Size size, double multiplier);
+		Block(Position position, Size size, double speed);
 		virtual ~Block();
 
 		//methods
 		void setColor(sf::Color color);
 		bool isDestroyed() const;
-		double getSpeedMultiplier() const;
+		double getSpeedNewSpeed() const;
 
 		//redefinitions
 		virtual void update(const sf::Clock) override;
@@ -31,7 +31,7 @@ class Block : public Collision
 
 
 	private:
-		double _speedMultiplier;
+		double _newSpeed;
 		bool _destroyed;
 		sf::RectangleShape* _blockShape;
 };

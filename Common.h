@@ -9,6 +9,9 @@
 #include <SFML/Window.hpp>
 
 
+const bool GAMEPLAY_DEBUG = true;
+
+
 namespace gameConstants
 {
 	const double MAX_X = 160;
@@ -27,7 +30,7 @@ namespace gameConstants
 
 	//paddle
 	//in degrees
-	const double MAX_BALL_PADDLE_DEFLECTION = 30;
+	const double MAX_BALL_PADDLE_DEFLECTION = 50;
 }
 
 #endif

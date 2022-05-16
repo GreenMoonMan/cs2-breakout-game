@@ -1,4 +1,5 @@
 #include "Ball.h"
+#include "Block.h"
 #include "Collision.h"
 #include "Common.h"
 #include "Physics.h"
@@ -62,33 +63,36 @@ void Ball::update(const sf::Clock clock)
 void Ball::collisionAction(Collision* otherObj)
 {
 	sf::Vector2f overlap = hitboxOverlap(this, otherObj);
+	bool collisionOccured = false;
 
-	//hits the side
+	//horizontal collisons
 	//and prevent hitting the same object twice
 	if(overlap.x <=overlap.y && _prevXCol != otherObj)
 	{
 		//"bounce" sideways
 		_xVel *= -1;
 		_prevXCol = otherObj;
+		collisionOccured = true;
 	}
 
+	//vertical collisions
+	//and prevent hitting the same object twice
 	if(overlap.x >= overlap.y && _prevYCol != otherObj)
 	{
 		//"bounce" vertically
 		_yVel *= -1;
 		_prevYCol = otherObj;
+		collisionOccured = true;
 	}
 
 
 	//------------------------------------------------------------
 	//paddle collisions
 
-	//FIXME prevent multiple collisions with the paddle
-
 	Paddle* paddlePtr = dynamic_cast<Paddle*>(otherObj);
 
 	//check if the ball hit the paddle
-	if(paddlePtr != nullptr)
+	if(paddlePtr != nullptr && collisionOccured)
 	{
 		//the angle of deflection of the ball is proportional to how off-center the hit of the ball was
 
@@ -99,19 +103,34 @@ void Ball::collisionAction(Collision* otherObj)
 		//scale from -1 to 1, having a magnitude of 1 if it hits the edge of the paddle
 		hitDistance /= paddlePtr->getHitbox().width + hitbox.width;
 
-		//TODO clean this up a bit and remove debug
+		if(GAMEPLAY_DEBUG)
+			cout << "old speed: " << sqrt(_xVel*_xVel + _yVel*_yVel) << endl;
+		
 		//multiply by the angle to give deflection angle
-		cout << "angle: " << gameConstants::MAX_BALL_PADDLE_DEFLECTION*hitDistance << endl;
-		cout << "old speed: " << sqrt(_xVel*_xVel + _yVel*_yVel) << endl;
 		changeDirection(gameConstants::MAX_BALL_PADDLE_DEFLECTION * hitDistance);
-		// PolarVector vel;
-		// vel.fromCartesian(_xVel, _yVel);
-		// vel.angle += gameConstants::MAX_BALL_PADDLE_DEFLECTION * hitDistance;
-		// sf::Vector2f temp = vel.toCartesian();
-		// _xVel = temp.x;
-		// _yVel = temp.y;
 
-		cout << "new speed: " << sqrt(_xVel*_xVel + _yVel*_yVel) << endl;
+		if(GAMEPLAY_DEBUG)
+			cout << "new speed: " << sqrt(_xVel*_xVel + _yVel*_yVel) << endl;
+	}
+
+
+	//------------------------------------------------------------
+	//block collisions
+
+	Block* blockPtr = dynamic_cast<Block*>(otherObj);
+
+	//check if ball hit a block
+	if(blockPtr != nullptr && collisionOccured)
+	{
+		//change speed of the ball if it's larger
+		PolarVector oldVel;
+		oldVel.fromCartesian(_xVel, _yVel);
+		double newSpeed = blockPtr->getSpeedNewSpeed();
+
+		if(oldVel.magnitude < newSpeed)
+		{
+			setSpeed(newSpeed);
+		}
 	}
 }
 
@@ -127,14 +146,35 @@ sf::Drawable* Ball::draw()
 //--------------------------------------------------------------------------------
 //private methods
 
-//FIXME ball slows down after repeated hits
 void Ball::changeDirection(double angle)
 {
-	//change angle to radians
-	angle *= M_PI/180.0;
+	//get angle
+	PolarVector vel;
+	vel.fromCartesian(_xVel, _yVel);
 
-	_xVel = _xVel * std::cos(angle) - _yVel * std::sin(angle);
-	_yVel = _yVel * std::cos(angle) + _xVel* std::sin(angle);
+	//change angle
+	vel.angle += angle;
+
+	//back to xy velocity
+	sf::Vector2f temp = vel.toCartesian();
+	_xVel = temp.x;
+	_yVel = temp.y;
+}
+
+
+void Ball::setSpeed(double speed)
+{
+	//get speed
+	PolarVector vel;
+	vel.fromCartesian(_xVel, _yVel);
+
+	//change speed
+	vel.magnitude = speed;
+
+	//back to xy velocity
+	sf::Vector2f temp = vel.toCartesian();
+	_xVel = temp.x;
+	_yVel = temp.y;
 }
 
 

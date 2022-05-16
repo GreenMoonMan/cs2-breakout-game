@@ -45,6 +45,7 @@ class Ball : public Collision
 		//functions
 		//changes angle of the ball (in degrees)
 		void changeDirection(double angle);
+		void setSpeed(double speed);
 		sf::Vector2f hitboxOverlap(Collision* obj1, Collision* obj2);
 };
 

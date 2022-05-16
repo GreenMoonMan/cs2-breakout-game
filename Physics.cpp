@@ -116,9 +116,10 @@ void PolarVector::fromCartesian(sf::Vector2f vect)
 sf::Vector2f PolarVector::toCartesian() const
 {
 	sf::Vector2f returnVect;
+	double radians = angle * M_PI / 180.0;
 
-	returnVect.x = magnitude * cos(angle);
-	returnVect.y = magnitude * sin(angle);
+	returnVect.x = magnitude * cos(radians);
+	returnVect.y = magnitude * sin(radians);
 
 	return returnVect;
 }

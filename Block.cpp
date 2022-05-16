@@ -11,7 +11,7 @@ int Block::blocksDestroyed = 0;
 
 Block::Block(Position position, Size size, double multiplier)
 :	Collision(position, size),
-	_speedMultiplier(multiplier), _destroyed(false),
+	_newSpeed(multiplier), _destroyed(false),
 	_blockShape(new sf::RectangleShape(hitbox.transformToScreen()))
 {
 	numOfBlocks++;
@@ -39,9 +39,9 @@ bool Block::isDestroyed() const
 }
 
 
-double Block::getSpeedMultiplier() const
+double Block::getSpeedNewSpeed() const
 {
-	return _speedMultiplier;
+	return _newSpeed;
 }
 
 
