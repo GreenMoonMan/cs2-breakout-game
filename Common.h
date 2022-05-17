@@ -26,15 +26,16 @@ namespace gameConstants
 	const int BLOCKS_ROWS = 3;
 	const int BLOCKS_COLUMNS = 8;
 	const double BLOCKS_HEIGHT = 4;
-	const double BLOCKS_WIDTH_VARIANCE = 2;
-	const double BLOCK_BALL_SPEED_INCREASE = 20;
+	const double BLOCKS_BASE_HEIGHT = 50;
+	const double BLOCKS_WIDTH_VARIANCE = 5;
+	const double BLOCK_BALL_SPEED_INCREASE = 10;
 
 	//paddle
 	//in degrees
 	const double MAX_BALL_PADDLE_DEFLECTION = 50;
 
 	//ball
-	const int BALL_STARTING_SPEED = 70;
+	const double BALL_STARTING_SPEED = 70;
 
 }
 

@@ -9,6 +9,7 @@
 
 #include <SFML/Window/Keyboard.hpp>
 #include <cmath>
+#include <cstdlib>
 
 
 BreakoutGame::BreakoutGame(sf::RenderWindow& window)
@@ -52,46 +53,30 @@ void BreakoutGame::setup()
 	ball = new Ball(2, PolarVector(70, rand() % 40 + 70));
 	gameObjects.push_back(ball);
 
-	double avWidth = gameConstants::MAX_X / 6;
+	// double avWidth = gameConstants::MAX_X / 6;
 	
 	//test creation of blocks
-	for(int row = 0; row < 2; row++)
-	{
-		double usedWidth = 0;
+	createBlockArray();
+	// for(int row = 0; row < 2; row++)
+	// {
+	// 	double usedWidth = 0;
 
-		//create everything except the last object
-		for(int i = 0; i < 6; i++)
-		{
-			double width = avWidth;
-			double height = gameConstants::BLOCKS_HEIGHT;
-			double yPos = 50 + row * gameConstants::BLOCKS_HEIGHT;
+	// 	//create everything except the last object
+	// 	for(int i = 0; i < 6; i++)
+	// 	{
+	// 		double width = avWidth;
+	// 		double height = gameConstants::BLOCKS_HEIGHT;
+	// 		double yPos = 50 + row * gameConstants::BLOCKS_HEIGHT;
 
-			Position pos(usedWidth + width/2, yPos);
+	// 		Position pos(usedWidth + width/2, yPos);
 
-			Block* blockPtr = new Block(pos, Size(width, height), 78);
-			gameObjects.push_back(blockPtr);
+	// 		Block* blockPtr = new Block(pos, Size(width, height), 78);
+	// 		gameObjects.push_back(blockPtr);
 
-			usedWidth += width;
-		}
-	}
+	// 		usedWidth += width;
+	// 	}
+	// }
 
-
-	double usedWidth = 0;
-
-	//create everything except the last object
-	for(int i = 0; i < 6; i++)
-	{
-		double width = avWidth;
-		double height = gameConstants::BLOCKS_HEIGHT;
-		double yPos = 50 + 2 * gameConstants::BLOCKS_HEIGHT;
-
-		Position pos(usedWidth + width/2, yPos);
-
-		Block* blockPtr = new Block(pos, Size(width, height), 130);
-		gameObjects.push_back(blockPtr);
-
-		usedWidth += width;
-	}
 }
 
 
@@ -197,7 +182,36 @@ int BreakoutGame::getScore()
 
 void BreakoutGame::createBlockArray()
 {
+	// double currentHeight = gameConstants::BLOCKS_BASE_HEIGHT;
 
+	//iterate through rows
+	for(int y = 0; y < gameConstants::BLOCKS_ROWS; y++)
+	{
+		double usedWidth = 0;
+
+		//iterate through each block in a row, except the last
+		for(int x = 0; x < gameConstants::BLOCKS_COLUMNS - 1; x++)
+		{
+			double variance = (static_cast<double>(rand())/RAND_MAX) * gameConstants::BLOCKS_WIDTH_VARIANCE;
+
+			double width = gameConstants::MAX_X / gameConstants::BLOCKS_COLUMNS - gameConstants::BLOCKS_WIDTH_VARIANCE / 2;
+			width += variance;
+			
+			//create block
+			double currentHeight = gameConstants::BLOCKS_BASE_HEIGHT + gameConstants::BLOCKS_HEIGHT*y;
+			double currentSpeed = gameConstants::BALL_STARTING_SPEED + gameConstants::BLOCK_BALL_SPEED_INCREASE*y;
+
+			Position blockPos(usedWidth + width/2, currentHeight);
+			Size blockSize(width, gameConstants::BLOCKS_HEIGHT);
+			Block* newBlock = new Block(blockPos, blockSize, currentSpeed);
+			gameObjects.push_back(newBlock);
+
+			//update variables
+			usedWidth += width;
+		}
+
+		//create the last block with
+	}
 }
 
 
