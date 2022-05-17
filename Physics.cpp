@@ -22,6 +22,63 @@ Size::Size()
 { }
 
 
+//------------------------------------------------------------
+//overloads
+
+
+bool Size::operator==(const Size& otherObj)
+{
+	double thisArea = width * height;
+	double otherArea = otherObj.width * otherObj.height;
+
+	if(thisArea == otherArea)
+	{
+		return true;
+	}
+
+	else  
+	{
+		return false;
+	}
+}
+
+
+bool Size::operator<(const Size& otherObj)
+{
+	double thisArea = width * height;
+	double otherArea = otherObj.width * otherObj.height;
+
+	if(thisArea < otherArea)
+	{
+		return true;
+	}
+
+	else  
+	{
+		return false;
+	}
+}
+
+
+bool Size::operator<=(const Size& otherObj)
+{
+	return *this < otherObj || *this == otherObj;
+}
+
+
+bool Size::operator>(const Size& otherObj)
+{
+	return *this > otherObj || *this == otherObj;
+}
+
+
+bool Size::operator>=(const Size& otherObj)
+{
+	return !(*this < otherObj);
+}
+
+
+//------------------------------------------------------------
 
 sf::Vector2f Size::transformToScreen() const
 {
