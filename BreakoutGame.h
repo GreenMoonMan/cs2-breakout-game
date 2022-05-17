@@ -50,19 +50,25 @@ class BreakoutGame
 		//searches for the first instance of an object in gameObjects
 		//returns the index of the found element, or -1 if the search failed
 		template<typename T>
-		int searchForType()
+		int searchForType(unsigned startingIndex = 0)
 		{
-			for(unsigned i = 0; i < gameObjects.size(); i++)
+			//base condition
+			//reached the end of the array
+			if(startingIndex == gameObjects.size())
 			{
-				T* target = dynamic_cast<T*>(gameObjects.at(i));
-
-				if(target != nullptr)
-				{
-					return i;
-				}
+				return -1;
 			}
 
-			return -1;
+			//check if dynamic cast works
+			T* target = dynamic_cast<T*>(gameObjects.at(startingIndex));
+
+			if(target != nullptr)
+			{
+				return startingIndex;
+			}
+
+			//recursive case
+			return searchForType<T>(startingIndex + 1);
 		}
 };
 

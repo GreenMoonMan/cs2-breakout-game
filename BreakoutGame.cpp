@@ -56,6 +56,7 @@ void BreakoutGame::setup()
 	//test creation of blocks
 	createBlocks();
 
+	std::cout << "ball loc: " << searchForType<Ball>() << std::endl;
 }
 
 
