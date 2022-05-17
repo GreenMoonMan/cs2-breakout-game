@@ -23,8 +23,8 @@ namespace gameConstants
 	const unsigned SCREEN_HEIGHT = 1080;
 
 	//blocks
-	const int BLOCKS_ROWS = 3;
-	const int BLOCKS_COLUMNS = 8;
+	const int BLOCKS_ROWS = 4;
+	const int BLOCKS_COLUMNS = 10;
 	const double BLOCKS_HEIGHT = 4;
 	const double BLOCKS_BASE_HEIGHT = 50;
 	const double BLOCKS_WIDTH_VARIANCE = 5;
@@ -32,7 +32,7 @@ namespace gameConstants
 
 	//paddle
 	//in degrees
-	const double MAX_BALL_PADDLE_DEFLECTION = 50;
+	const double MAX_BALL_PADDLE_DEFLECTION = 60;
 
 	//ball
 	const double BALL_STARTING_SPEED = 70;

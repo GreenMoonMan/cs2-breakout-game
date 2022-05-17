@@ -45,7 +45,7 @@ class BreakoutGame
 		Ball* ball;
 
 		//private methods
-		void createBlockArray();
+		void createBlocks();
 };
 
 

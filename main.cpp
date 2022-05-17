@@ -31,7 +31,7 @@ int main()
 	sf::RenderWindow renderWindow(sf::VideoMode(gameConstants::SCREEN_WIDTH, gameConstants::SCREEN_HEIGHT), "wow! much game!", sf::Style::Titlebar | sf::Style::Close);
 	sf::Event event;
 
-	renderWindow.setFramerateLimit(75*2);
+	renderWindow.setFramerateLimit(75*3);
 	// renderWindow.setVerticalSyncEnabled(true);
 
 	srand(time(0));
