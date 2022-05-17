@@ -46,6 +46,24 @@ class BreakoutGame
 
 		//private methods
 		void createBlocks();
+
+		//searches for the first instance of an object in gameObjects
+		//returns the index of the found element, or -1 if the search failed
+		template<typename T>
+		int searchForType()
+		{
+			for(unsigned i = 0; i < gameObjects.size(); i++)
+			{
+				T* target = dynamic_cast<T*>(gameObjects.at(i));
+
+				if(target != nullptr)
+				{
+					return i;
+				}
+			}
+
+			return -1;
+		}
 };
 
 

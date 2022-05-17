@@ -55,6 +55,7 @@ void BreakoutGame::setup()
 	
 	//test creation of blocks
 	createBlocks();
+
 }
 
 
