@@ -43,6 +43,9 @@ class BreakoutGame
 		Wall* walls[NUM_OF_WALLS];
 		Paddle* paddle;
 		Ball* ball;
+
+		//private methods
+		void createBlockArray();
 };
 
 

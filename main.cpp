@@ -7,6 +7,9 @@
 #include "Block.h"
 #include "BreakoutGame.h"
 
+#include <cmath>
+#include <cstdlib>
+
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -30,6 +33,8 @@ int main()
 
 	renderWindow.setFramerateLimit(75*2);
 	// renderWindow.setVerticalSyncEnabled(true);
+
+	srand(time(0));
 
 	sf::Clock clock;
 	

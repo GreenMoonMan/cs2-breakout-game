@@ -111,6 +111,11 @@ void Ball::collisionAction(Collision* otherObj)
 
 		if(GAMEPLAY_DEBUG)
 			cout << "new speed: " << sqrt(_xVel*_xVel + _yVel*_yVel) << endl;
+		
+		//since the paddle can change the angle of the balls bounce
+		//the ball can have 2 side collisons with the same object in a row
+		//therefore the previous side collision variable needs to be changed
+		_prevXCol = paddlePtr;
 	}
 
 

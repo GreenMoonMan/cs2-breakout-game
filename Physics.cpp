@@ -43,6 +43,12 @@ bool Size::operator==(const Size& otherObj)
 }
 
 
+bool Size::operator!=(const Size &otherObj)
+{
+	return !(*this == otherObj);
+}
+
+
 bool Size::operator<(const Size& otherObj)
 {
 	double thisArea = width * height;
@@ -68,7 +74,7 @@ bool Size::operator<=(const Size& otherObj)
 
 bool Size::operator>(const Size& otherObj)
 {
-	return *this > otherObj || *this == otherObj;
+	return *this < otherObj && *this != otherObj;
 }
 
 

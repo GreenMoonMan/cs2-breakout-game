@@ -49,7 +49,7 @@ void BreakoutGame::setup()
 	//create ball
 	//dummy lauch value, change to be random later
 	//was 55, 55
-	ball = new Ball(2, 0, 100);
+	ball = new Ball(2, PolarVector(70, rand() % 40 + 70));
 	gameObjects.push_back(ball);
 
 	double avWidth = gameConstants::MAX_X / 6;
@@ -87,7 +87,7 @@ void BreakoutGame::setup()
 
 		Position pos(usedWidth + width/2, yPos);
 
-		Block* blockPtr = new Block(pos, Size(width, height), 200);
+		Block* blockPtr = new Block(pos, Size(width, height), 130);
 		gameObjects.push_back(blockPtr);
 
 		usedWidth += width;
@@ -189,4 +189,17 @@ int BreakoutGame::getScore()
 {
 	return score;
 }
+
+
+//--------------------------------------------------------------------------------
+//private methods
+//--------------------------------------------------------------------------------
+
+void BreakoutGame::createBlockArray()
+{
+
+}
+
+
+
 

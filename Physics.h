@@ -18,6 +18,8 @@ class Size
 		//TODO actually test these
 		//overloads, compares area of two Size objects
 		bool operator==(const Size& otherObj);
+		bool operator!=(const Size& otherObj);
+
 		bool operator<(const Size& otherObj);
 		bool operator<=(const Size& otherObj);
 		bool operator>(const Size& otherObj);
