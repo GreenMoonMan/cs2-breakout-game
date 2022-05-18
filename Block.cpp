@@ -1,12 +1,14 @@
 #include "Block.h"
 #include "Ball.h"
 #include "Collision.h"
+#include "Common.h"
 #include <SFML/Graphics/Color.hpp>
 #include <cstddef>
 
 
 int Block::numOfBlocks = 0;
 int Block::blocksDestroyed = 0;
+int Block::score = 0;
 
 //--------------------------------------------------------------------------------
 
@@ -25,6 +27,14 @@ Block::~Block()
 {
 	delete _blockShape;
 	_blockShape = nullptr;
+
+	//reset the block counters
+	numOfBlocks--;
+	
+	if(_destroyed)
+	{
+		blocksDestroyed--;
+	}
 }
 
 
@@ -66,6 +76,9 @@ void Block::collisionAction(Collision* otherObj)
 		//ball destorys the block
 		_destroyed = true;
 		blocksDestroyed++;
+
+		//score increment is dependent on the speed of the block
+		score += _newSpeed / gameConstants::BLOCK_BALL_SPEED_INCREASE;
 
 		//move the block off screen so that it doens't interfere with the ball
 		pos.x = -hitbox.width;

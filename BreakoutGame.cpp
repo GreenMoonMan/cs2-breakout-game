@@ -8,15 +8,17 @@
 #include "Wall.h"
 
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/Font.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <cmath>
 #include <cstdlib>
+#include <string>
 
 
-BreakoutGame::BreakoutGame(sf::RenderWindow& window)
-:	renderWindow(window),
-	score(0), gameOver(false),
+BreakoutGame::BreakoutGame(sf::RenderWindow& window, sf::Font& gameFont)
+:	renderWindow(window), font(gameFont),
+	gameOver(false),
 	launchBall(false), ballLaunchTimer(0), ballsLeft(gameConstants::BALLS_EXTRA_AVAILABLE), win(false),
 	walls{new Wall(Wall::LEFT), new Wall(Wall::RIGHT), new Wall(Wall::TOP)}
 { 
@@ -56,6 +58,14 @@ void BreakoutGame::setup()
 	launchBall = true;
 	ballLaunchTimer = 0;
 
+
+	//initialize score text
+	//lots of magic numbers to make it the correct size and location
+	Size scoreSize(0, 2.5);
+	Position scorePos(gameConstants::MAX_X - 20, gameConstants::MAX_Y - 1);
+	scoreText.setFont(font);
+	scoreText.setCharacterSize(scoreSize.transformToScreen().y);
+	scoreText.setPosition(scorePos.transformToScreen());
 	
 	createBlocks();
 
@@ -130,10 +140,8 @@ void BreakoutGame::run(const sf::Clock& clock)
 			obj->update(clock);
 		}
 
-		//update score
-		score = Block::blocksDestroyed;
-		
 
+		//check if player missed the ball
 		if(ball->getPosition().y + ball->getHitbox().height/4 < 0 && !launchBall)
 		{
 			ballsLeft--;
@@ -186,6 +194,13 @@ void BreakoutGame::display()
 		renderWindow.draw(circle);
 		circle.move(circle.getRadius()*2 + 3, 0);
 	}
+
+	//display text
+	std::string scoreString = "SCORE: ";
+	//TODO maybe just use raw score value instead of the one combined with the balls
+	scoreString += std::to_string(getScore());
+	scoreText.setString(scoreString);
+	renderWindow.draw(scoreText);
 }
 
 
@@ -207,6 +222,10 @@ bool BreakoutGame::isGameWon()
 
 int BreakoutGame::getScore()
 {
+	int score = Block::score;
+	//player gets extra points if they didn't lose a ball
+	score += 12 * ballsLeft;
+
 	return score;
 }
 

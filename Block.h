@@ -28,6 +28,7 @@ class Block : public Collision
 		//probably move into private later
 		static int numOfBlocks;
 		static int blocksDestroyed;
+		static int score;
 
 
 	private:

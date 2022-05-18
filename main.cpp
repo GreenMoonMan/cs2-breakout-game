@@ -40,8 +40,11 @@ int main()
 
 	sf::Clock clock;
 
-	
-	BreakoutGame game(renderWindow);
+	sf::Font font;
+	// font.loadFromFile("assets/Connection2.otf");
+	font.loadFromFile("assets/Monoid-Regular.ttf");
+
+	BreakoutGame game(renderWindow, font);
 	game.setup();
 
 
