@@ -1,8 +1,9 @@
 #ifndef COLLISION_H
 #define COLLISION_H
 
+#include "../Common.h"
+
 #include "Physics.h"
-#include "Common.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Clock.hpp>

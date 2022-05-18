@@ -1,7 +1,8 @@
+#include "../Common.h"
+
 #include "Block.h"
 #include "Ball.h"
 #include "Collision.h"
-#include "Common.h"
 #include <SFML/Graphics/Color.hpp>
 #include <cstddef>
 

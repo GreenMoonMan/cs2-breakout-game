@@ -1,7 +1,7 @@
 #ifndef BALL_H
 #define BALL_H
 
-#include "Common.h"
+#include "../Common.h"
 #include "Collision.h"
 #include "Physics.h"
 #include <SFML/Graphics/CircleShape.hpp>

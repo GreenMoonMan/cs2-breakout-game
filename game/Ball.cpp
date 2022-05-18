@@ -1,7 +1,7 @@
 #include "Ball.h"
 #include "Block.h"
 #include "Collision.h"
-#include "Common.h"
+#include "../Common.h"
 #include "Physics.h"
 #include "Paddle.h"
 

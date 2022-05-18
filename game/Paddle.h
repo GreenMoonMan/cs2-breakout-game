@@ -1,7 +1,8 @@
 #ifndef PADDLE_H
 #define PADDLE_H
 
-#include "Common.h"
+#include "../Common.h"
+
 #include "Collision.h"
 #include "Physics.h"
 #include <SFML/Graphics/Color.hpp>

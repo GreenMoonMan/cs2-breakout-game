@@ -1,7 +1,8 @@
 #ifndef BREAKOUTGAME_H
 #define BREAKOUTGAME_H
 
-#include "Common.h"
+#include "../Common.h"
+
 #include "Collision.h"
 #include "Paddle.h"
 #include "Ball.h"

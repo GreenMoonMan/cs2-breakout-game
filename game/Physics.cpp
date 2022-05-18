@@ -1,5 +1,6 @@
+#include "../Common.h"
+
 #include "Physics.h"
-#include "Common.h"
 
 #include <SFML/System/Vector2.hpp>
 #include <cmath>

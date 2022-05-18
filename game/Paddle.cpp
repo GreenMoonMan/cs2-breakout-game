@@ -1,7 +1,8 @@
+#include "../Common.h"
+
 #include "Paddle.h"
 #include "Wall.h"
 #include "Collision.h"
-#include "Common.h"
 #include "Physics.h"
 
 #include <SFML/Graphics/Color.hpp>

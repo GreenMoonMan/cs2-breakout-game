@@ -1,7 +1,8 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
-#include "Common.h"
+#include "../Common.h"
+
 #include <SFML/System/Vector2.hpp>
 
 

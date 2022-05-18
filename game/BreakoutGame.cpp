@@ -1,8 +1,9 @@
+#include "../Common.h"
+
 #include "BreakoutGame.h"
 #include "Ball.h"
 #include "Block.h"
 #include "Collision.h"
-#include "Common.h"
 #include "Paddle.h"
 #include "Physics.h"
 #include "Wall.h"

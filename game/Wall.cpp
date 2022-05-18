@@ -1,6 +1,6 @@
 #include "Wall.h"
 #include "Collision.h"
-#include "Common.h"
+#include "../Common.h"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
