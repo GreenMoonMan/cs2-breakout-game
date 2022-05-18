@@ -25,6 +25,7 @@ class BreakoutGame
 
 		//other methods
 		bool isGameOver();
+		bool isGameWon();
 		int getScore();
 
 
@@ -38,9 +39,10 @@ class BreakoutGame
 		bool gameOver;
 
 		//other attributes
-		int ballsLeft = 3;
 		bool launchBall;
 		double ballLaunchTimer;
+		int ballsLeft;
+		bool win;
 
 		//game objects
 		//all game objects are stored in this polymorhpic vector
@@ -51,6 +53,7 @@ class BreakoutGame
 
 		//private methods
 		void createBlocks();
+		void launchNewBall();
 
 		//searches for the first instance of an object in gameObjects
 		//returns the index of the found element, or -1 if the search failed

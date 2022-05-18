@@ -16,7 +16,7 @@
 BreakoutGame::BreakoutGame(sf::RenderWindow& window)
 :	renderWindow(window),
 	score(0), gameOver(false),
-	launchBall(false), ballLaunchTimer(0),
+	launchBall(false), ballLaunchTimer(0), ballsLeft(gameConstants::BALLS_AVAILABLE), win(false),
 	walls{new Wall(Wall::LEFT), new Wall(Wall::RIGHT), new Wall(Wall::TOP)}
 { 
 	//add walls to vector
@@ -71,101 +71,92 @@ void BreakoutGame::run(const sf::Clock& clock)
 	//launch ball when ready
 	if(launchBall && ballLaunchTimer >= gameConstants::BALL_LAUNCH_DELAY)
 	{
-		double launchAngle = (static_cast<double>(std::rand()) / RAND_MAX) * gameConstants::BALL_LAUNCH_ANGLE_DEVIATION;
-		//set middle to be vertical
-		launchAngle += 90 - gameConstants::BALL_LAUNCH_ANGLE_DEVIATION/2.0;
-
-		PolarVector launchVel(gameConstants::BALL_STARTING_SPEED, launchAngle);
-		Position launchPos(gameConstants::BALL_STARTING_X, gameConstants::BALL_STARTING_Y);
-
-		Ball* newBall = new Ball(gameConstants::BALL_DIAMETER, launchVel, launchPos);
-
-		//delete old ball and use the new one
-		int ballIndex = searchForType<Ball>();
-		gameObjects.at(ballIndex) = newBall;
-		delete ball;
-		ball = newBall;
-
-
+		launchNewBall();
+		
 		launchBall = false;
 	}
 
 	ballLaunchTimer += clock.getElapsedTime().asSeconds();
 
-	
-	//check if ball hit any objects
-	for(Collision* obj : gameObjects)
+	//only run game after the ball has finished launching
+	if(!launchBall)
 	{
-		if(checkCollision(ball, obj))
+		//check if ball hit any objects
+		for(Collision* obj : gameObjects)
 		{
-			ball->collisionAction(obj);
-			obj->collisionAction(ball);
+			if(checkCollision(ball, obj))
+			{
+				ball->collisionAction(obj);
+				obj->collisionAction(ball);
+			}
 		}
-	}
 
-	//check if paddle hits the walls
-	for(Collision* wall : walls)
-	{
-		if(checkCollision(paddle, wall))
+		//check if paddle hits the walls
+		for(Collision* wall : walls)
 		{
-			paddle->collisionAction(wall);
+			if(checkCollision(paddle, wall))
+			{
+				paddle->collisionAction(wall);
+			}
 		}
-	}
 
-	//add bottomwall if debug
-	if(GAMEPLAY_DEBUG)
-	{
-		Wall tempWall = Wall(Wall::BOTTOM);
+		//add bottomwall if debug
+		if(GAMEPLAY_DEBUG)
+		{
+			Wall tempWall = Wall(Wall::BOTTOM);
+			
+			if(checkCollision(ball, &tempWall))
+			{
+				// ball->collisionAction(&tempWall);
+			}
+		}
+
+
+		//key presses
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			paddle->move(gameConstants::PADDLE_SPEED);
+		}
+
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			paddle->move(-gameConstants::PADDLE_SPEED);
+		}
+
+
+		//update all objects
+		for(Collision* obj : gameObjects)
+		{
+			obj->update(clock);
+		}
+
+		//update score
+		score = Block::blocksDestroyed;
 		
-		if(checkCollision(ball, &tempWall))
+
+		if(ball->getPosition().y + ball->getHitbox().height/4 < 0 && !launchBall)
 		{
-			ball->collisionAction(&tempWall);
+			ballsLeft--;
+
+			if(ballsLeft == 0)
+			{
+				gameOver = true;
+			}
+
+			else
+			{
+				launchBall = true;
+				ballLaunchTimer = 0;
+			}
+		}
+
+		//if the game is won
+		if(Block::blocksDestroyed == Block::numOfBlocks)
+		{
+			gameOver = true;
+			win = true;
 		}
 	}
-
-
-	//key presses
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-	{
-		paddle->move(gameConstants::PADDLE_SPEED);
-	}
-
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-	{
-		paddle->move(-gameConstants::PADDLE_SPEED);
-	}
-
-
-	//update all objects
-	for(Collision* obj : gameObjects)
-	{
-		obj->update(clock);
-	}
-
-	//update score
-	score = Block::blocksDestroyed;
-	
-	//check for game over
-	if(ball->getPosition().y + ball->getHitbox().height/2 < 0 || Block::blocksDestroyed == Block::numOfBlocks)
-	{
-		gameOver = true;
-	}
-	
-	// if(ball->getPosition().y + ball->getHitbox().height/2 < 0)
-	// {
-	// 	ballsLeft--;
-
-	// 	if(ballsLeft < 0)
-	// 	{
-	// 		gameOver = true;
-	// 	}
-
-	// 	else  
-	// 	{
-	// 		launchBall = true;
-	// 		ballLaunchTimer = 0;
-	// 	}
-	// }
 }
 
 
@@ -195,10 +186,17 @@ bool BreakoutGame::isGameOver()
 }
 
 
+bool BreakoutGame::isGameWon()
+{
+	return win;
+}
+
+
 int BreakoutGame::getScore()
 {
 	return score;
 }
+
 
 
 //--------------------------------------------------------------------------------
@@ -253,7 +251,24 @@ void BreakoutGame::createBlocks()
 
 
 
+void BreakoutGame::launchNewBall()
+{
+	double launchAngle = (static_cast<double>(std::rand()) / RAND_MAX) * gameConstants::BALL_LAUNCH_ANGLE_DEVIATION;
+	//set middle to be vertical
+	launchAngle += 90 - gameConstants::BALL_LAUNCH_ANGLE_DEVIATION/2.0;
 
+	PolarVector launchVel(gameConstants::BALL_STARTING_SPEED, launchAngle);
+	//place right above the paddle
+	Position launchPos(paddle->getPosition().x, gameConstants::BALL_STARTING_Y);
+
+	Ball* newBall = new Ball(gameConstants::BALL_DIAMETER, launchVel, launchPos);
+
+	//delete old ball and use the new one
+	int ballIndex = searchForType<Ball>();
+	gameObjects.at(ballIndex) = newBall;
+	delete ball;
+	ball = newBall;
+}
 
 
 

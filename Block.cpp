@@ -1,6 +1,7 @@
 #include "Block.h"
 #include "Ball.h"
 #include "Collision.h"
+#include <SFML/Graphics/Color.hpp>
 #include <cstddef>
 
 
@@ -14,6 +15,8 @@ Block::Block(Position position, Size size, double multiplier)
 	_newSpeed(multiplier), _destroyed(false),
 	_blockShape(new sf::RectangleShape(hitbox.transformToScreen()))
 {
+	_blockShape->setOutlineColor(sf::Color::Black);
+	_blockShape->setOutlineThickness(1);
 	numOfBlocks++;
 }
 
