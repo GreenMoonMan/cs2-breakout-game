@@ -37,6 +37,11 @@ class BreakoutGame
 		int score;
 		bool gameOver;
 
+		//other attributes
+		int ballsLeft = 3;
+		bool launchBall;
+		double ballLaunchTimer;
+
 		//game objects
 		//all game objects are stored in this polymorhpic vector
 		std::vector<Collision*> gameObjects;
@@ -49,6 +54,7 @@ class BreakoutGame
 
 		//searches for the first instance of an object in gameObjects
 		//returns the index of the found element, or -1 if the search failed
+		//uses a linear search
 		template<typename T>
 		int searchForType(unsigned startingIndex = 0)
 		{

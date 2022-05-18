@@ -7,6 +7,7 @@
 #include "Physics.h"
 #include "Wall.h"
 
+#include <SFML/System/Clock.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <cmath>
 #include <cstdlib>
@@ -15,6 +16,7 @@
 BreakoutGame::BreakoutGame(sf::RenderWindow& window)
 :	renderWindow(window),
 	score(0), gameOver(false),
+	launchBall(false), ballLaunchTimer(0),
 	walls{new Wall(Wall::LEFT), new Wall(Wall::RIGHT), new Wall(Wall::TOP)}
 { 
 	//add walls to vector
@@ -41,22 +43,24 @@ BreakoutGame::~BreakoutGame()
 
 void BreakoutGame::setup()
 {
-	//TODO rewrite ball launch and how blocks are created
-
 	//create paddle
-	paddle = new Paddle(Size(30, 1));
+	paddle = new Paddle(Size(gameConstants::PADDLE_WIDTH, gameConstants::PADDLE_HEIGHT));
 	gameObjects.push_back(paddle);
 
-	//create ball
-	//dummy lauch value, change to be random later
-	//was 55, 55
-	ball = new Ball(2, PolarVector(70, rand() % 40 + 70));
+	//FIXME breaks for position values of -10
+	//prep for launching ball
+	//create dummy ball
+	ball = new Ball(gameConstants::BALL_DIAMETER, PolarVector(0, 0), Position(gameConstants::BALL_STARTING_X, gameConstants::BALL_STARTING_Y));
+	// ball = new Ball(2, PolarVector(20, 90), Position(10, 10));
 	gameObjects.push_back(ball);
+	launchBall = true;
+	ballLaunchTimer = 0;
+
 	
-	//test creation of blocks
 	createBlocks();
 
-	std::cout << "ball loc: " << searchForType<Ball>() << std::endl;
+	if(GAMEPLAY_DEBUG)
+		std::cout << "ball loc: " << searchForType<Ball>() << std::endl;
 }
 
 
@@ -64,6 +68,31 @@ void BreakoutGame::setup()
 
 void BreakoutGame::run(const sf::Clock& clock)
 {
+	//launch ball when ready
+	if(launchBall && ballLaunchTimer >= gameConstants::BALL_LAUNCH_DELAY)
+	{
+		double launchAngle = (static_cast<double>(std::rand()) / RAND_MAX) * gameConstants::BALL_LAUNCH_ANGLE_DEVIATION;
+		//set middle to be vertical
+		launchAngle += 90 - gameConstants::BALL_LAUNCH_ANGLE_DEVIATION/2.0;
+
+		PolarVector launchVel(gameConstants::BALL_STARTING_SPEED, launchAngle);
+		Position launchPos(gameConstants::BALL_STARTING_X, gameConstants::BALL_STARTING_Y);
+
+		Ball* newBall = new Ball(gameConstants::BALL_DIAMETER, launchVel, launchPos);
+
+		//delete old ball and use the new one
+		int ballIndex = searchForType<Ball>();
+		gameObjects.at(ballIndex) = newBall;
+		delete ball;
+		ball = newBall;
+
+
+		launchBall = false;
+	}
+
+	ballLaunchTimer += clock.getElapsedTime().asSeconds();
+
+	
 	//check if ball hit any objects
 	for(Collision* obj : gameObjects)
 	{
@@ -98,12 +127,12 @@ void BreakoutGame::run(const sf::Clock& clock)
 	//key presses
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		paddle->move(90);
+		paddle->move(gameConstants::PADDLE_SPEED);
 	}
 
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		paddle->move(-90);
+		paddle->move(-gameConstants::PADDLE_SPEED);
 	}
 
 
@@ -121,6 +150,22 @@ void BreakoutGame::run(const sf::Clock& clock)
 	{
 		gameOver = true;
 	}
+	
+	// if(ball->getPosition().y + ball->getHitbox().height/2 < 0)
+	// {
+	// 	ballsLeft--;
+
+	// 	if(ballsLeft < 0)
+	// 	{
+	// 		gameOver = true;
+	// 	}
+
+	// 	else  
+	// 	{
+	// 		launchBall = true;
+	// 		ballLaunchTimer = 0;
+	// 	}
+	// }
 }
 
 
@@ -205,6 +250,9 @@ void BreakoutGame::createBlocks()
 		}
 	}
 }
+
+
+
 
 
 

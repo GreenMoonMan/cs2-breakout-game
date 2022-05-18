@@ -17,6 +17,7 @@ class Ball : public Collision
 		//maybe have the velocity as a different function
 		Ball(double diameter, double xVel, double yVel);
 		Ball(double diameter, PolarVector initialVelocity);
+		Ball(double diameter, PolarVector initialVelocity, Position initialPos);
 		Ball(double diameter);
 		virtual ~Ball();
 

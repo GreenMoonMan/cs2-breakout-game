@@ -27,6 +27,21 @@ Ball::Ball(double diameter, double xVel, double yVel)
 }
 
 
+Ball::Ball(double diameter, PolarVector initialVelocity, Position initialPos)
+:	Collision(initialPos.x, initialPos.y, diameter, diameter),
+	_prevXCol(nullptr), _prevYCol(nullptr),
+	_ballShape(new sf::CircleShape())
+{
+	sf::Vector2f cartesianVel = initialVelocity.toCartesian();
+
+	_xVel = cartesianVel.x;
+	_yVel = cartesianVel.y;
+
+	//set correct size
+	_ballShape->setRadius(hitbox.transformToScreen().x / 2);
+}
+
+
 Ball::Ball(double diameter, PolarVector initialVelocity)
 : Ball(diameter, 0, 0)
 {
