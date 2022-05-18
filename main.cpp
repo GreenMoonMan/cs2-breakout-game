@@ -8,6 +8,8 @@
 #include "game/Block.h"
 #include "game/BreakoutGame.h"
 
+#include "menu/Menu.h"
+
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <cmath>
@@ -45,8 +47,7 @@ int main()
 	// font.loadFromFile("assets/Connection2.otf");
 	font.loadFromFile("assets/Monoid-Regular.ttf");
 
-	BreakoutGame game(renderWindow, font);
-	game.setup();
+	Menu mainMenu(renderWindow, font);
 
 
 	while(renderWindow.isOpen())
@@ -60,25 +61,21 @@ int main()
 			{
 				if(event.key.code == sf::Keyboard::Escape)
 					renderWindow.close();
+
+				if(event.key.code == sf::Keyboard::Up)
+					mainMenu.up();
+
+				if(event.key.code == sf::Keyboard::Down)
+					mainMenu.down();
+
+				if(event.key.code == sf::Keyboard::Enter)
+					mainMenu.select();
 			}
 		}
 
 		renderWindow.clear();
-		static bool scoreFlag = false;
-
-		if(!game.isGameOver())
-		{
-			game.run(clock);
-		}
-
-		else if(!scoreFlag)
-		{
-			cout << "score: " << game.getScore() << endl;
-			scoreFlag = true;
-		}
-
-
-		game.display();
+		
+		mainMenu.update();
 
 		clock.restart();
 		renderWindow.display();

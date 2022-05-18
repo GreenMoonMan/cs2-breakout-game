@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.0)
 
 project(breakout)
 
-file(GLOB codeFiles *.cpp game/*.cpp)
+file(GLOB codeFiles *.cpp game/*.cpp menu/*.cpp)
 
 
 set(CMAKE_CXX_STANDARD, 17)
