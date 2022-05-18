@@ -7,6 +7,8 @@
 #include "Block.h"
 #include "BreakoutGame.h"
 
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <cmath>
 #include <cstdlib>
 
@@ -37,6 +39,7 @@ int main()
 	srand(time(0));
 
 	sf::Clock clock;
+
 	
 	BreakoutGame game(renderWindow);
 	game.setup();

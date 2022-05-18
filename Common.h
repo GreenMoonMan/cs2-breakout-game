@@ -44,7 +44,7 @@ namespace gameConstants
 	const double BALL_STARTING_Y = 10;
 	const double BALL_LAUNCH_ANGLE_DEVIATION = 85;
 	const double BALL_LAUNCH_DELAY = 1.5; //in seconds
-	const int BALLS_AVAILABLE = 3;
+	const int BALLS_EXTRA_AVAILABLE = 3;
 }
 
 #endif

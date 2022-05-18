@@ -13,7 +13,6 @@
 class Paddle : public Collision
 {
 	public:
-		//TODO change this to only take in size, and x position
 		//the paddle will automatcially be placed at the bottom of the screen
 		Paddle(Position paddlePos, Size paddleSize);
 		Paddle(Size paddleSize);

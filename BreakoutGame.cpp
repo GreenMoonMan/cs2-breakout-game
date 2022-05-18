@@ -7,6 +7,7 @@
 #include "Physics.h"
 #include "Wall.h"
 
+#include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <cmath>
@@ -16,7 +17,7 @@
 BreakoutGame::BreakoutGame(sf::RenderWindow& window)
 :	renderWindow(window),
 	score(0), gameOver(false),
-	launchBall(false), ballLaunchTimer(0), ballsLeft(gameConstants::BALLS_AVAILABLE), win(false),
+	launchBall(false), ballLaunchTimer(0), ballsLeft(gameConstants::BALLS_EXTRA_AVAILABLE), win(false),
 	walls{new Wall(Wall::LEFT), new Wall(Wall::RIGHT), new Wall(Wall::TOP)}
 { 
 	//add walls to vector
@@ -47,7 +48,6 @@ void BreakoutGame::setup()
 	paddle = new Paddle(Size(gameConstants::PADDLE_WIDTH, gameConstants::PADDLE_HEIGHT));
 	gameObjects.push_back(paddle);
 
-	//FIXME breaks for position values of -10
 	//prep for launching ball
 	//create dummy ball
 	ball = new Ball(gameConstants::BALL_DIAMETER, PolarVector(0, 0), Position(gameConstants::BALL_STARTING_X, gameConstants::BALL_STARTING_Y));
@@ -138,7 +138,7 @@ void BreakoutGame::run(const sf::Clock& clock)
 		{
 			ballsLeft--;
 
-			if(ballsLeft == 0)
+			if(ballsLeft < 0)
 			{
 				gameOver = true;
 			}
@@ -164,6 +164,7 @@ void BreakoutGame::run(const sf::Clock& clock)
 
 void BreakoutGame::display()
 {
+	//display game objects
 	for(Collision* object : gameObjects)
 	{
 		renderWindow.draw(*object->draw());
@@ -172,6 +173,18 @@ void BreakoutGame::display()
 		{
 			renderWindow.draw(drawHitbox(object));
 		}
+	}
+
+
+	//display on screen elements
+	//balls left
+	const Size onScreenBall(2, 2);
+	sf::CircleShape circle(onScreenBall.transformToScreen().x/2);
+
+	for(int i = 0; i < ballsLeft; i++)
+	{
+		renderWindow.draw(circle);
+		circle.move(circle.getRadius()*2 + 3, 0);
 	}
 }
 
