@@ -51,7 +51,7 @@ int main()
 
 	Menu mainMenu(renderWindow, font);
 
-	ScoreBoard board(MenuConstants::SCORE_FILE_PATH);
+	ScoreBoard board(renderWindow, font, MenuConstants::SCORE_FILE_PATH);
 
 	try
 	{
@@ -93,7 +93,8 @@ int main()
 
 		renderWindow.clear();
 		
-		mainMenu.update();
+		// mainMenu.update();
+		board.display();
 
 		clock.restart();
 		renderWindow.display();

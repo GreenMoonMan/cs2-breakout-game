@@ -2,18 +2,22 @@
 #define SCOREBOARD_H
 
 #include "../Common.h"
+#include "TextList.h"
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <fstream>
 
 
 class ScoreBoard
 {
 	public:
-		ScoreBoard(std::string filePath);
+		ScoreBoard(sf::RenderWindow& window, sf::Font& font, std::string filePath);
 		~ScoreBoard();
 
 		void readFile();
-		void display();
 		void addScore(int score);
+		void display();
 
 		//error class
 		class FileError
@@ -28,6 +32,12 @@ class ScoreBoard
 
 
 	private:
+		//for drawing scores
+		sf::RenderWindow& renderWindow;
+		TextList _scoreList;
+
+		sf::Text _headerText;
+
 		//dynamic array of scores
 		std::string _filePath;
 		int* _scoreArray;

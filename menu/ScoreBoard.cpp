@@ -1,4 +1,5 @@
 #include "ScoreBoard.h"
+#include <SFML/Graphics/Text.hpp>
 #include <fstream>
 #include <ios>
 #include <string>
@@ -7,10 +8,23 @@
 using namespace std;
 
 
-ScoreBoard::ScoreBoard(std::string filePath)
-:	_filePath(filePath),
+ScoreBoard::ScoreBoard(sf::RenderWindow& window, sf::Font& font, std::string filePath)
+:	renderWindow(window), _scoreList(window, font),
+	_filePath(filePath),
 	_scoreArray(nullptr), _numOfScores(0)
-{ }
+{
+	//for displaying the header
+	_headerText.setString("TOP SCORES:");
+
+	_headerText.setFont(font);
+	Position headerPos(gameConstants::MAX_X/2, gameConstants::MAX_Y - 5);
+	Size headerHeight(0, 5);
+	_headerText.setCharacterSize(headerHeight.transformToScreen().y);
+	
+	//set origin to center and position correctly
+	_headerText.setOrigin(_headerText.getLocalBounds().width/2, _headerText.getLocalBounds().height/2);
+	_headerText.setPosition(headerPos.transformToScreen());
+}
 
 
 ScoreBoard::~ScoreBoard()
@@ -59,11 +73,7 @@ void ScoreBoard::readFile()
 }
 
 
-void ScoreBoard::display()
-{
-
-}
-
+//---------------------------------------------------------------------------------------------------
 
 void ScoreBoard::addScore(int score)
 {
@@ -121,6 +131,34 @@ void ScoreBoard::addScore(int score)
 		throw FileError("Failed to open score file");
 	}
 }
+
+
+//---------------------------------------------------------------------------------------------------
+
+void ScoreBoard::display()
+{
+	//TODO make max of 20 or so scores to display
+	string* scoreText = new string[_numOfScores];
+	
+	for(int i = 0; i < _numOfScores; i++)
+	{
+		//add a rank number first
+		scoreText[i] = to_string(i + 1) + ":  ";
+		scoreText[i] += to_string(_scoreArray[i]);
+	}
+
+	//more magic numbers to set position correctly
+	_scoreList.setText(scoreText, _numOfScores);
+	_scoreList.sizeAndPosition(Size(0, 3), Position(gameConstants::MAX_X/2 - 5, gameConstants::MAX_Y - 20));
+	_scoreList.setVerticalSpace(3);
+	_scoreList.display();
+
+	delete[] scoreText;
+
+	//display header
+	renderWindow.draw(_headerText);
+}
+
 
 
 //***************************************************************************************************
