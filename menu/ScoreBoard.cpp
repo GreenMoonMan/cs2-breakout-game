@@ -45,7 +45,7 @@ void ScoreBoard::readFile()
 		_numOfScores = countNumberOfScores(scoreFile);
 
 		//create array for scores
-		_scoreArray = new int(_numOfScores);
+		_scoreArray = new int[_numOfScores];
 		readIntoArray(scoreFile);
 		scoreFile.close();
 
