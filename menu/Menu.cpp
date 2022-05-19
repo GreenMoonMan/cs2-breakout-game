@@ -1,8 +1,11 @@
 #include "Menu.h"
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <iostream>
 #include <iterator>
+
 #include "../game/Physics.h"
+#include "../game/Block.h"
 
 
 Menu::Menu(sf::RenderWindow& renderWindow, sf::Font& textFont)
@@ -50,6 +53,12 @@ void Menu::down()
 
 void Menu::select()
 {
+	if(currentSelection == 0 && !selectionMade)
+	{
+		playSetup();
+	}
+
+	gameClock.restart();
 	selectionMade = true;
 }
 
@@ -64,21 +73,35 @@ void Menu::update()
 	if(selectionMade)
 	{
 		//call appropriate functions
-		std::cout << "enter!!!" << std::endl;
-		selectionMade = false;
+		//the function specifies wheter it is time to exit
+		switch (currentSelection)
+		{
+			case 0:
+				selectionMade = play();
+				break;
+			
+			case 1:
+				selectionMade = scores();
+				break;
+			
+			case 2:
+				selectionMade = credits();
+		}
 	}
 
 
 	//display menu
 	else
 	{
-		Size textHeight(0, 6);
-		Position textPos(gameConstants::MAX_X / 2, gameConstants::MAX_Y - 20);
+		Size textHeight(0, 4);
+		Position textPos(gameConstants::MAX_X / 2, gameConstants::MAX_Y - 40);
 
 		//apply to each item in the menu
 		for(int i = 0; i < MENU_SIZE; i++)
 		{
 			std::string menuString;
+
+			menuText[i].setFillColor(sf::Color(20, 255, 90));
 
 			//place cursor
 			if(currentSelection == i)
@@ -111,6 +134,9 @@ void Menu::update()
 			renderWindow.draw(menuText[i]);
 		}
 	}
+
+
+	gameClock.restart();
 }
 
 
@@ -118,20 +144,40 @@ void Menu::update()
 //private methods
 //***************************************************************************************************
 
-void Menu::play()
+void Menu::playSetup()
 {
-
+	game = new BreakoutGame(renderWindow, font);
+	Block::score = 0;
+	game->setup();
 }
 
 
-void Menu::scores()
+bool Menu::play()
 {
+	game->run(gameClock);
+	game->display();
 
+	if(game->isGameOver())
+	{
+		// delete game;
+		return false;
+	}
+
+	else  
+	{
+		return true;
+	}
 }
 
 
-void Menu::credits()
+bool Menu::scores()
 {
+	return false;
+}
 
+
+bool Menu::credits()
+{
+	return false;
 }
 

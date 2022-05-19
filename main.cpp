@@ -9,10 +9,12 @@
 #include "game/BreakoutGame.h"
 
 #include "menu/Menu.h"
+#include "menu/ScoreBoard.h"
 
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <cmath>
+#include <cstddef>
 #include <cstdlib>
 
 #include <SFML/Graphics/Color.hpp>
@@ -48,6 +50,22 @@ int main()
 	font.loadFromFile("assets/Monoid-Regular.ttf");
 
 	Menu mainMenu(renderWindow, font);
+
+	ScoreBoard board(MenuConstants::SCORE_FILE_PATH);
+
+	try
+	{
+		board.readFile();
+	}
+
+	catch(ScoreBoard::FileError& error)
+	{
+		cout << error.what() << endl;
+	}
+
+	board.addScore(23);
+	board.addScore(333);
+	board.addScore(123);
 
 
 	while(renderWindow.isOpen())

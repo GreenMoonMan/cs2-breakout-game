@@ -2,9 +2,11 @@
 #define MENU_H
 
 #include "../Common.h"
+#include "../game/BreakoutGame.h"
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/System/Clock.hpp>
 
 
 class Menu
@@ -38,12 +40,20 @@ class Menu
 		int currentSelection;
 		bool selectionMade;
 
+		//for game
+		BreakoutGame* game;
+		sf::Clock gameClock;
+
 		//private methods
 		void showMenu(int position);
 
-		void play();
-		void scores();
-		void credits();
+		//returns false when exited
+		void playSetup();
+		bool play();
+		void scoresSetup();
+		bool scores();
+		void creditsSetup();
+		bool credits();
 };
 
 #endif

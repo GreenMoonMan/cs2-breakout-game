@@ -7,9 +7,11 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <string>
 
 
 const bool GAMEPLAY_DEBUG = true;
+const bool INTERFACE_DEBUG = true;
 
 
 namespace gameConstants
@@ -46,5 +48,13 @@ namespace gameConstants
 	const double BALL_LAUNCH_DELAY = 1.5; //in seconds
 	const int BALLS_EXTRA_AVAILABLE = 3;
 }
+
+
+namespace MenuConstants
+{
+	const std::string SCORE_FILE_PATH = "scores.txt";
+}
+
+
 
 #endif
