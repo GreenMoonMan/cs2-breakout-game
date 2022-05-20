@@ -87,11 +87,11 @@ void Collision::update(const sf::Clock)
 
 sf::RectangleShape drawHitbox(Collision* obj)
 {
-	sf::Vector2f hitBoxSize = obj->getHitbox().transformToScreen();
+	sf::Vector2f hitBoxSize = obj->hitbox.transformToScreen();
 	sf::RectangleShape returnRect(hitBoxSize);
 
 	//move to correcto position
-	sf::Vector2f screenPos = obj->getPosition().transformToScreen(obj->getHitbox());
+	sf::Vector2f screenPos = obj->pos.transformToScreen(obj->hitbox);
 	returnRect.setPosition(screenPos);
 
 	//set fill color of hitbox to transperent
@@ -113,11 +113,11 @@ bool checkCollision(Collision *obj1, Collision *obj2)
 		return false;
 	}
 
-
-	double distanceX = std::abs(obj1->getPosition().x - obj2->getPosition().x);
-	double distanceY = std::abs(obj1->getPosition().y - obj2->getPosition().y);
-	double avWidth = (obj1->getHitbox().width + obj2->getHitbox().width)/2;
-	double avHeight= (obj1->getHitbox().height + obj2->getHitbox().height)/2;
+	//check if the hitboxes overlap with each other
+	double distanceX = std::abs(obj1->pos.x - obj2->pos.x);
+	double distanceY = std::abs(obj1->pos.y - obj2->pos.y);
+	double avWidth = (obj1->hitbox.width + obj2->hitbox.width)/2;
+	double avHeight= (obj1->hitbox.height + obj2->hitbox.height)/2;
 
 	if(distanceX < avWidth && distanceY < avHeight)
 	{

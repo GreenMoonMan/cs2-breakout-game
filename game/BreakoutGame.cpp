@@ -15,6 +15,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <string>
+#include <vector>
 
 
 BreakoutGame::BreakoutGame(sf::RenderWindow& window, sf::Font& gameFont)
@@ -34,9 +35,12 @@ BreakoutGame::BreakoutGame(sf::RenderWindow& window, sf::Font& gameFont)
 BreakoutGame::~BreakoutGame()
 {
 	//delete all game objects
-	for(Collision* object: gameObjects)
+	std::vector<Collision*>::iterator obj;
+
+	for(obj = gameObjects.begin(); obj != gameObjects.end(); obj++)
 	{
-		delete object;
+		delete *obj;
+		*obj = nullptr;
 	}
 }
 

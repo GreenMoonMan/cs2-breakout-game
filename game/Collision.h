@@ -38,20 +38,14 @@ class Collision
 		virtual sf::Drawable* draw() = 0;
 
 		//friends
-		//TODO doesn't actually need to be friends?
-		friend sf::RectangleShape drawHitbox(Collision& obj);
-		friend bool checkCollision();
+		friend sf::RectangleShape drawHitbox(Collision* obj);
+		friend bool checkCollision(Collision* obj1, Collision* obj2);
 
 
 	protected:
 		Position pos;
 		Size hitbox;
 };
-
-
-//functions
-sf::RectangleShape drawHitbox(Collision* obj);
-bool checkCollision(Collision* obj1, Collision* obj2);
 
 
 #endif
