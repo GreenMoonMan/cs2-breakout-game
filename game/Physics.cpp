@@ -27,7 +27,7 @@ Size::Size()
 //overloads
 
 
-bool Size::operator==(const Size& otherObj)
+bool Size::operator==(const Size& otherObj) const
 {
 	double thisArea = width * height;
 	double otherArea = otherObj.width * otherObj.height;
@@ -44,13 +44,13 @@ bool Size::operator==(const Size& otherObj)
 }
 
 
-bool Size::operator!=(const Size &otherObj)
+bool Size::operator!=(const Size &otherObj) const
 {
 	return !(*this == otherObj);
 }
 
 
-bool Size::operator<(const Size& otherObj)
+bool Size::operator<(const Size& otherObj) const
 {
 	double thisArea = width * height;
 	double otherArea = otherObj.width * otherObj.height;
@@ -67,19 +67,19 @@ bool Size::operator<(const Size& otherObj)
 }
 
 
-bool Size::operator<=(const Size& otherObj)
+bool Size::operator<=(const Size& otherObj) const
 {
 	return *this < otherObj || *this == otherObj;
 }
 
 
-bool Size::operator>(const Size& otherObj)
+bool Size::operator>(const Size& otherObj) const
 {
-	return *this < otherObj && *this != otherObj;
+	return otherObj < *this; 
 }
 
 
-bool Size::operator>=(const Size& otherObj)
+bool Size::operator>=(const Size& otherObj) const
 {
 	return !(*this < otherObj);
 }

@@ -18,13 +18,13 @@ class Size
 
 		//TODO actually test these
 		//overloads, compares area of two Size objects
-		bool operator==(const Size& otherObj);
-		bool operator!=(const Size& otherObj);
+		bool operator==(const Size& otherObj) const;
+		bool operator!=(const Size& otherObj) const;
 
-		bool operator<(const Size& otherObj);
-		bool operator<=(const Size& otherObj);
-		bool operator>(const Size& otherObj);
-		bool operator>=(const Size& otherObj);
+		bool operator<(const Size& otherObj) const;
+		bool operator<=(const Size& otherObj) const;
+		bool operator>(const Size& otherObj) const;
+		bool operator>=(const Size& otherObj) const;
 
 		//transforms from in game size to screen size in pixels
 		sf::Vector2f transformToScreen() const;
