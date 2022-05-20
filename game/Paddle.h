@@ -11,6 +11,18 @@
 #include <SFML/System/Clock.hpp>
 
 
+/***************************************************************************************************
+* Paddle
+* 
+* the user interactable paddle at the bottom of the screen
+* the constructor allows setting the size and position,
+* if the position is not given, it will automatically be put at the bottom middle of the screen
+*
+* the move() method will move the paddle at the desired speed
+* will only move the paddle when repeatedly called, paddle will stop when not called
+***************************************************************************************************/
+
+
 class Paddle : public Collision
 {
 	public:

@@ -6,6 +6,15 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 
 
+/***************************************************************************************************
+* Wall
+*
+* represents outer walls in the game
+* they are a zero width collidable object, and do not display anything
+* the side which they are located on is specified in the constructor
+***************************************************************************************************/
+
+
 class Wall : public Collision
 {
 	public:
