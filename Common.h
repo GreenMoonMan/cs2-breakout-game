@@ -1,6 +1,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include <SFML/Graphics/Color.hpp>
 #include <iostream>
 
 #include <SFML/Audio.hpp>
@@ -10,7 +11,7 @@
 #include <string>
 
 
-const bool GAMEPLAY_DEBUG = true;
+const bool GAMEPLAY_DEBUG = false;
 const bool INTERFACE_DEBUG = true;
 
 
@@ -31,6 +32,10 @@ namespace gameConstants
 	const double BLOCKS_BASE_HEIGHT = 50;
 	const double BLOCKS_WIDTH_VARIANCE = 5;
 	const double BLOCK_BALL_SPEED_INCREASE = 10;
+	const sf::Color BLOCK_COLORS[BLOCKS_ROWS] =
+		{
+			sf::Color::Blue, sf::Color::Green, sf::Color::Magenta, sf::Color::Red
+		};
 
 	//paddle
 	//in degrees
