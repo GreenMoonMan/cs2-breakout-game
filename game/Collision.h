@@ -8,6 +8,14 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Clock.hpp>
 
+/********************************************************************************
+* Collision Class
+*
+* A base abstract class that handles physics and collisions
+* every in game object is derived from this class
+* this way collision physics is handled only by this class
+********************************************************************************/
+
 
 class Collision
 {
@@ -22,10 +30,6 @@ class Collision
 		virtual ~Collision();
 
 		//getters
-		double getX() const;
-		double getY() const;
-		double getHbWidth() const;
-		double getHbHeight() const;
 		Position getPosition() const;
 		Size getHitbox() const;
 
@@ -33,12 +37,21 @@ class Collision
 		//by default this function does nothing
 		virtual void update(const sf::Clock);
 
+
+		//------------------------------------------------------------
 		//abstract functions
+		//the derived class is responsible for implementing this function
+		//it will be called after a collision is detected
+		//with the other parameter being the object that was collided with
 		virtual void collisionAction(Collision*) = 0;
+		//every object in the game will also poses something that can be drawn on the screen
 		virtual sf::Drawable* draw() = 0;
 
+
 		//friends
+		//returns a red box that represents the hitbox for an object
 		friend sf::RectangleShape drawHitbox(Collision* obj);
+		//checks if 2 objects have collided
 		friend bool checkCollision(Collision* obj1, Collision* obj2);
 
 

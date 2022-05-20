@@ -40,29 +40,6 @@ Collision::~Collision()
 
 //--------------------------------------------------------------------------------
 //getters
-double Collision::getX() const
-{
-	return pos.x;
-}
-
-
-double Collision::getY() const
-{
-	return pos.y;
-}
-
-
-double Collision::getHbWidth() const
-{
-	return hitbox.width;
-}
-
-
-double Collision::getHbHeight() const
-{
-	return hitbox.height;
-}
-
 
 Position Collision::getPosition() const
 {
