@@ -45,7 +45,7 @@ namespace gameConstants
 	const double BALL_STARTING_X = 80;
 	const double BALL_STARTING_Y = 10;
 	const double BALL_LAUNCH_ANGLE_DEVIATION = 85;
-	const double BALL_LAUNCH_DELAY = 1.5; //in seconds
+	const double BALL_LAUNCH_DELAY = 1.25; //in seconds
 	const int BALLS_EXTRA_AVAILABLE = 3;
 }
 
@@ -53,6 +53,7 @@ namespace gameConstants
 namespace MenuConstants
 {
 	const std::string SCORE_FILE_PATH = "scores.txt";
+	const std::string FONT_FILE_PATH = "assets/Monoid-Regular.ttf";
 }
 
 

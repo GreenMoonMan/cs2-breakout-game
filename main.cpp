@@ -47,7 +47,15 @@ int main()
 
 	sf::Font font;
 	// font.loadFromFile("assets/Connection2.otf");
-	font.loadFromFile("assets/Monoid-Regular.ttf");
+
+	if(!font.loadFromFile(MenuConstants::FONT_FILE_PATH))
+	{
+		//if font failed to load
+		cout << "[ERROR] could not find font \"" << MenuConstants::FONT_FILE_PATH << "\"\n"
+			<<"hint: was the game run from the \"bin/\" directory?" << endl;
+
+		return 1;
+	}
 
 	Menu mainMenu(renderWindow, font);
 
@@ -57,10 +65,20 @@ int main()
 		while(renderWindow.pollEvent(event))
 		{
 			if(event.type == sf::Event::EventType::Closed)
+			{
+				mainMenu.exit();
 				renderWindow.close();
+			}
 			
 			if(event.type == sf::Event::EventType::KeyPressed)
 			{
+				//if ctrl+q was pressed
+				if(event.key.code == sf::Keyboard::Q && sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+				{
+					mainMenu.exit();
+					renderWindow.close();
+				}
+				
 				if(event.key.code == sf::Keyboard::Escape)
 					mainMenu.escape();
 

@@ -24,6 +24,7 @@ class Menu
 		void escape();
 
 		void update();
+		void exit();
 
 
 	private:

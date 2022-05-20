@@ -15,7 +15,8 @@ Menu::Menu(sf::RenderWindow& renderWindow, sf::Font& textFont)
 :	renderWindow(renderWindow), font(textFont),
 	scoreboard(renderWindow, font, MenuConstants::SCORE_FILE_PATH),
 	menuText(new sf::Text[MENU_SIZE]),
-	currentSelection(0), selectionMade(false), escaped(false)
+	currentSelection(0), selectionMade(false), escaped(false),
+	game(nullptr)
 {
 	//set up text font
 	for(int i = 0; i < MENU_SIZE; i++)
@@ -180,6 +181,19 @@ void Menu::update()
 }
 
 
+void Menu::exit()
+{
+	if(INTERFACE_DEBUG)
+	{
+		std::cout << "deleting game before exit" << std::endl;
+	}
+
+	//delete game upon exit to prevent memory leak
+	delete game;
+	game = nullptr;
+}
+
+
 //***************************************************************************************************
 //private methods
 //***************************************************************************************************
@@ -197,10 +211,25 @@ bool Menu::play()
 	game->run(gameClock);
 	game->display();
 
-	if(game->isGameOver() || escaped)
+	//if the player won/lost
+	if(game->isGameOver())
 	{
-		// delete game;
+		//go to the scores screen
+		currentSelection = 1;
+		//add current score to the file
+		scoreboard.addScore(game->getScore());
+
+		//exit game
 		delete game;
+		game = nullptr;
+		return true;
+	}
+
+	//just exit
+	else if(escaped)
+	{
+		delete game;
+		game = nullptr;
 		return false;
 	}
 
@@ -216,7 +245,6 @@ bool Menu::scores()
 	scoreboard.display();
 
 	return !escaped;
-	// return true;
 }
 
 
