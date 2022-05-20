@@ -137,7 +137,8 @@ void ScoreBoard::addScore(int score)
 
 void ScoreBoard::display()
 {
-	//TODO make max of 20 or so scores to display
+	//TODO fix this attrocity
+	//also make max of 20 or so scores to display
 	string* scoreText = new string[_numOfScores];
 	
 	for(int i = 0; i < _numOfScores; i++)

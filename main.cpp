@@ -51,22 +51,6 @@ int main()
 
 	Menu mainMenu(renderWindow, font);
 
-	ScoreBoard board(renderWindow, font, MenuConstants::SCORE_FILE_PATH);
-
-	try
-	{
-		board.readFile();
-	}
-
-	catch(ScoreBoard::FileError& error)
-	{
-		cout << error.what() << endl;
-	}
-
-	board.addScore(23);
-	board.addScore(333);
-	board.addScore(123);
-
 
 	while(renderWindow.isOpen())
 	{
@@ -78,7 +62,7 @@ int main()
 			if(event.type == sf::Event::EventType::KeyPressed)
 			{
 				if(event.key.code == sf::Keyboard::Escape)
-					renderWindow.close();
+					mainMenu.escape();
 
 				if(event.key.code == sf::Keyboard::Up)
 					mainMenu.up();
@@ -93,8 +77,7 @@ int main()
 
 		renderWindow.clear();
 		
-		// mainMenu.update();
-		board.display();
+		mainMenu.update();
 
 		clock.restart();
 		renderWindow.display();

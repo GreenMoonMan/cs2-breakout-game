@@ -3,6 +3,8 @@
 
 #include "../Common.h"
 #include "../game/BreakoutGame.h"
+#include "ScoreBoard.h"
+
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -19,6 +21,7 @@ class Menu
 		void up();
 		void down();
 		void select();
+		void escape();
 
 		void update();
 
@@ -34,11 +37,15 @@ class Menu
 		sf::RenderWindow& renderWindow;
 		sf::Font& font;
 
+		//for scores
+		ScoreBoard scoreboard;
+
 		//dynamic array of selectable text
 		sf::Text* menuText;
 
 		int currentSelection;
 		bool selectionMade;
+		bool escaped;
 
 		//for game
 		BreakoutGame* game;
@@ -50,7 +57,6 @@ class Menu
 		//returns false when exited
 		void playSetup();
 		bool play();
-		void scoresSetup();
 		bool scores();
 		void creditsSetup();
 		bool credits();

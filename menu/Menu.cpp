@@ -1,22 +1,56 @@
 #include "Menu.h"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <fstream>
 #include <iostream>
 #include <iterator>
+#include <ostream>
 
 #include "../game/Physics.h"
 #include "../game/Block.h"
+#include "ScoreBoard.h"
 
 
 Menu::Menu(sf::RenderWindow& renderWindow, sf::Font& textFont)
 :	renderWindow(renderWindow), font(textFont),
+	scoreboard(renderWindow, font, MenuConstants::SCORE_FILE_PATH),
 	menuText(new sf::Text[MENU_SIZE]),
-	currentSelection(0), selectionMade(false)
+	currentSelection(0), selectionMade(false), escaped(false)
 {
 	//set up text font
 	for(int i = 0; i < MENU_SIZE; i++)
 	{
 		menuText[i].setFont(font);
+	}
+
+	//setup scores
+	try
+	{
+		scoreboard.readFile();
+	}
+
+	catch(ScoreBoard::FileError& error)
+	{
+		std::cout << "Could not find/open score file, creating one" << std::endl;
+		//create blank score file
+		std::fstream newFile;
+		newFile.open(MenuConstants::SCORE_FILE_PATH, std::ios::out);
+
+		if(newFile.is_open())
+		{
+			std::cout << "Successfully created score file" << std::endl;
+		}
+
+		else  
+		{
+			std::cout << "[ERROR] could not create a new scorefile" << std::endl;
+			throw error;
+		}
+
+		newFile.close();
+		//try to read newly created file
+		//if this fails, just let an exception be thrown, there are other problems
+		scoreboard.readFile();
 	}
 }
 
@@ -60,6 +94,12 @@ void Menu::select()
 
 	gameClock.restart();
 	selectionMade = true;
+}
+
+
+void Menu::escape()
+{
+	escaped = true;
 }
 
 
@@ -135,7 +175,7 @@ void Menu::update()
 		}
 	}
 
-
+	escaped = false;
 	gameClock.restart();
 }
 
@@ -146,8 +186,8 @@ void Menu::update()
 
 void Menu::playSetup()
 {
-	game = new BreakoutGame(renderWindow, font);
 	Block::score = 0;
+	game = new BreakoutGame(renderWindow, font);
 	game->setup();
 }
 
@@ -157,9 +197,10 @@ bool Menu::play()
 	game->run(gameClock);
 	game->display();
 
-	if(game->isGameOver())
+	if(game->isGameOver() || escaped)
 	{
 		// delete game;
+		delete game;
 		return false;
 	}
 
@@ -172,7 +213,10 @@ bool Menu::play()
 
 bool Menu::scores()
 {
-	return false;
+	scoreboard.display();
+
+	return !escaped;
+	// return true;
 }
 
 
