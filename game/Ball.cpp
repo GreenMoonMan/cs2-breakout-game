@@ -80,6 +80,7 @@ void Ball::collisionAction(Collision* otherObj)
 	sf::Vector2f overlap = hitboxOverlap(this, otherObj);
 	bool collisionOccured = false;
 
+	//the side that overlaps the least is the side which the collision occured
 	//horizontal collisons
 	//and prevent hitting the same object twice
 	if(overlap.x <=overlap.y && _prevXCol != otherObj)
@@ -198,7 +199,7 @@ void Ball::setSpeed(double speed)
 }
 
 
-sf::Vector2f Ball::hitboxOverlap(Collision* obj1, Collision* obj2)
+sf::Vector2f Ball::hitboxOverlap(Collision* obj1, Collision* obj2) const
 {
 	sf::Vector2f overlapVect;
 

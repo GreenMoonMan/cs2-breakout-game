@@ -165,7 +165,7 @@ void BreakoutGame::run(const sf::Clock& clock)
 		}
 
 		//if the game is won
-		if(Block::blocksDestroyed == Block::numOfBlocks)
+		if(Block::getBlocksDestroyed() == Block::getNumOfBlocks())
 		{
 			gameOver = true;
 			win = true;

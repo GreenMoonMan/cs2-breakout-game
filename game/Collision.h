@@ -13,7 +13,7 @@
 *
 * A base abstract class that handles physics and collisions
 * every in game object is derived from this class
-* this way collision physics is handled only by this class
+* this way collision physics can be self contained for every object
 ********************************************************************************/
 
 

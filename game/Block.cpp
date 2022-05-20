@@ -7,8 +7,8 @@
 #include <cstddef>
 
 
-int Block::numOfBlocks = 0;
-int Block::blocksDestroyed = 0;
+int Block::_numOfBlocks = 0;
+int Block::_blocksDestroyed = 0;
 int Block::score = 0;
 
 //--------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ Block::Block(Position position, Size size, double multiplier)
 {
 	_blockShape->setOutlineColor(sf::Color::Black);
 	_blockShape->setOutlineThickness(1);
-	numOfBlocks++;
+	_numOfBlocks++;
 }
 
 
@@ -30,11 +30,11 @@ Block::~Block()
 	_blockShape = nullptr;
 
 	//reset the block counters
-	numOfBlocks--;
+	_numOfBlocks--;
 	
 	if(_destroyed)
 	{
-		blocksDestroyed--;
+		_blocksDestroyed--;
 	}
 }
 
@@ -68,11 +68,6 @@ double Block::getSpeedNewSpeed() const
 //--------------------------------------------------------------------------------
 //redefinitions
 
-//TODO currently this is a dummy and can be removed 
-void Block::update(const sf::Clock)
-{ }
-
-
 void Block::collisionAction(Collision* otherObj)
 {
 	Ball* ballPtr = dynamic_cast<Ball*>(otherObj);
@@ -82,7 +77,7 @@ void Block::collisionAction(Collision* otherObj)
 	{
 		//ball destorys the block
 		_destroyed = true;
-		blocksDestroyed++;
+		_blocksDestroyed++;
 
 		//score increment is dependent on the speed of the block
 		score += _newSpeed / gameConstants::BLOCK_BALL_SPEED_INCREASE;
@@ -99,3 +94,17 @@ sf::Drawable* Block::draw()
 	return _blockShape;
 }
 
+
+//***************************************************************************************************
+//static getters
+
+int Block::getNumOfBlocks()
+{
+	return _numOfBlocks;
+}
+
+
+int Block::getBlocksDestroyed()
+{
+	return _blocksDestroyed;
+}
