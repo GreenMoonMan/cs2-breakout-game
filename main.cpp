@@ -1,7 +1,7 @@
 #include "Common.h"
+#include "Physics.h"
 
 #include "game/Collision.h"
-#include "game/Physics.h"
 #include "game/Paddle.h"
 #include "game/Wall.h"
 #include "game/Ball.h"

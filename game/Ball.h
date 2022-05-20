@@ -2,8 +2,9 @@
 #define BALL_H
 
 #include "../Common.h"
+#include "../Physics.h"
+
 #include "Collision.h"
-#include "Physics.h"
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/System/Clock.hpp>

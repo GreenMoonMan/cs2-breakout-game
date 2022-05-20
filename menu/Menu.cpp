@@ -6,7 +6,7 @@
 #include <iterator>
 #include <ostream>
 
-#include "../game/Physics.h"
+#include "../Physics.h"
 #include "../game/Block.h"
 #include "ScoreBoard.h"
 

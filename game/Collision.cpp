@@ -1,5 +1,5 @@
 #include "Collision.h"
-#include "Physics.h"
+#include "../Physics.h"
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>

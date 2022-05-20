@@ -2,9 +2,9 @@
 #define PADDLE_H
 
 #include "../Common.h"
+#include "../Physics.h"
 
 #include "Collision.h"
-#include "Physics.h"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>

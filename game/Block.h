@@ -2,7 +2,7 @@
 #define BLOCK_H
 
 #include "Collision.h"
-#include "Physics.h"
+#include "../Physics.h"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Clock.hpp>

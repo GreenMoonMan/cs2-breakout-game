@@ -2,7 +2,7 @@
 #define TEXTLIST_H
 
 #include "../Common.h"
-#include "../game/Physics.h"
+#include "../Physics.h"
 
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>

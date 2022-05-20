@@ -1,7 +1,7 @@
 #ifndef WALL_H
 #define WALL_H
 
-#include "Physics.h"
+#include "../Physics.h"
 #include "Collision.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 

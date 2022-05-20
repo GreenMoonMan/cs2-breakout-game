@@ -1,9 +1,9 @@
 #include "../Common.h"
+#include "../Physics.h"
 
 #include "Paddle.h"
 #include "Wall.h"
 #include "Collision.h"
-#include "Physics.h"
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>

@@ -1,11 +1,11 @@
 #include "../Common.h"
+#include "../Physics.h"
 
 #include "BreakoutGame.h"
 #include "Ball.h"
 #include "Block.h"
 #include "Collision.h"
 #include "Paddle.h"
-#include "Physics.h"
 #include "Wall.h"
 
 #include <SFML/Graphics/CircleShape.hpp>
