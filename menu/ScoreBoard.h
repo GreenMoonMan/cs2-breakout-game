@@ -41,7 +41,9 @@ class ScoreBoard
 		//dynamic array of scores
 		std::string _filePath;
 		int* _scoreArray;
+		std::string* _scoreStrings;
 		int _numOfScores;
+		int _numOfScoresOnScreen;
 
 		//private methods
 		//finds out how many scores there are in the file
@@ -49,6 +51,7 @@ class ScoreBoard
 		void readIntoArray(std::fstream& file);
 		void sortArray();
 		bool searchForScore(int score);
+		void updateScoreStrings();
 };
 
 #endif

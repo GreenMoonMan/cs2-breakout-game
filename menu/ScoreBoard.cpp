@@ -11,7 +11,8 @@ using namespace std;
 ScoreBoard::ScoreBoard(sf::RenderWindow& window, sf::Font& font, std::string filePath)
 :	renderWindow(window), _scoreList(window, font),
 	_filePath(filePath),
-	_scoreArray(nullptr), _numOfScores(0)
+	_scoreArray(nullptr), _scoreStrings(nullptr),
+	_numOfScores(0), _numOfScoresOnScreen(0)
 {
 	//for displaying the header
 	_headerText.setString("TOP SCORES:");
@@ -30,6 +31,7 @@ ScoreBoard::ScoreBoard(sf::RenderWindow& window, sf::Font& font, std::string fil
 ScoreBoard::~ScoreBoard()
 {
 	delete[] _scoreArray;
+	delete[] _scoreStrings;
 }
 
 
@@ -50,10 +52,11 @@ void ScoreBoard::readFile()
 		scoreFile.close();
 
 		sortArray();
+		updateScoreStrings();
 
 		if(INTERFACE_DEBUG)
 		{
-			cout << "number of scores: " << _numOfScores << "\n";
+			cout << "read in scores\nnumber of scores: " << _numOfScores << "\n";
 			cout << "scores: \n";
 			
 			for(int i = 0; i < _numOfScores; i++)
@@ -107,6 +110,7 @@ void ScoreBoard::addScore(int score)
 			_numOfScores++;
 
 			sortArray();
+			updateScoreStrings();
 
 			//debug
 			if(INTERFACE_DEBUG)
@@ -137,24 +141,11 @@ void ScoreBoard::addScore(int score)
 
 void ScoreBoard::display()
 {
-	//TODO fix this attrocity
-	//also make max of 20 or so scores to display
-	string* scoreText = new string[_numOfScores];
-	
-	for(int i = 0; i < _numOfScores; i++)
-	{
-		//add a rank number first
-		scoreText[i] = to_string(i + 1) + ":  ";
-		scoreText[i] += to_string(_scoreArray[i]);
-	}
-
 	//more magic numbers to set position correctly
-	_scoreList.setText(scoreText, _numOfScores);
+	_scoreList.setText(_scoreStrings, _numOfScoresOnScreen);
 	_scoreList.sizeAndPosition(Size(0, 3), Position(gameConstants::MAX_X/2 - 5, gameConstants::MAX_Y - 20));
 	_scoreList.setVerticalSpace(3);
 	_scoreList.display();
-
-	delete[] scoreText;
 
 	//display header
 	renderWindow.draw(_headerText);
@@ -249,6 +240,47 @@ bool ScoreBoard::searchForScore(int score)
 	}
 
 	return false;
+}
+
+
+void ScoreBoard::updateScoreStrings()
+{
+	//limit the number of score on screen to 10
+	if(_numOfScores < 10)
+	{
+		_numOfScoresOnScreen = _numOfScores;
+	}
+
+	else  
+	{
+		_numOfScoresOnScreen = 10;
+	}
+
+	//delete old string array and create new one
+	delete [] _scoreStrings;
+	_scoreStrings = new string[_numOfScoresOnScreen];
+
+	//assign the scores to the string, and prefix with the rank
+	int rank = 1;
+	int* currentScore = _scoreArray;
+
+	for(string* scoreString = _scoreStrings; scoreString < _scoreStrings + _numOfScoresOnScreen; scoreString++)
+	{
+		*scoreString = to_string(rank) + ":  ";
+		*scoreString += to_string(*currentScore);
+
+		if(INTERFACE_DEBUG)
+		{
+			cout << "score string: " << *scoreString << endl;
+		}
+
+		rank++;
+		currentScore++;
+	}
+
+	//add extra line after printing out message
+	if(INTERFACE_DEBUG)
+		cout << endl;
 }
 
 
