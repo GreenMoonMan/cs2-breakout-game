@@ -16,6 +16,26 @@
 #include <vector>
 
 
+/***************************************************************************************************
+* BreakoutGame
+*
+* this is the main breakout game
+* constructor takes the main window and which font to use
+* 
+* setup() is called only once to setup the game, must be called before run() can be called
+*
+* run(clock) must be called in a loop, clock must be reset each loop, as it keeps track of the change in time
+* this method handle physics, user input, etc...
+*
+* display(): draws everything to the screen, also must be called in a loop
+*
+* the game is finished when the isGameOver() returns true
+*
+* a Breakout game object can only be used once per game
+* it should be created right before use and deleted right after
+***************************************************************************************************/
+
+
 class BreakoutGame
 {
 	public:
@@ -28,8 +48,11 @@ class BreakoutGame
 		void display();
 
 		//other methods
+		//if the player lost all balls or won
 		bool isGameOver();
+		//if all the blocks have been destroyed
 		bool isGameWon();
+		//score of the blocks destroyed + bonus score from additional non-lost balls
 		int getScore();
 
 
