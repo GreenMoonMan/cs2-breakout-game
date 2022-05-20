@@ -249,7 +249,7 @@ void BreakoutGame::createBlocks()
 		double usedWidth = 0;
 		double currentHeight = gameConstants::BLOCKS_BASE_HEIGHT + gameConstants::BLOCKS_HEIGHT*y;
 		double currentSpeed = gameConstants::BALL_STARTING_SPEED + gameConstants::BLOCK_BALL_SPEED_INCREASE*y;
-		sf::Color currentColor = gameConstants::BLOCK_COLORS[y];
+		Block* middleBlock = nullptr;
 		Block* prevBlock = nullptr;
 
 		//iterate through each block in a row, except the last
@@ -269,51 +269,28 @@ void BreakoutGame::createBlocks()
 			Position blockPos(usedWidth + width/2, currentHeight);
 			Size blockSize(width, gameConstants::BLOCKS_HEIGHT);
 			Block* newBlock = new Block(blockPos, blockSize, currentSpeed);
+			newBlock->setColor(gameConstants::BLOCK_COLORS[y]);
 
-			//set color
-			//if the block is larger than the one to the left, it will change color
-			//color will reset if the block is smaller
-			if(prevBlock != nullptr)
+			//special game mechanic
+			//if a block is larger than it's 2 neighbors, it will be white
+			//and will have a larger speed increase
+			if(prevBlock != nullptr && middleBlock != nullptr
+				&& prevBlock->getHitbox() < middleBlock->getHitbox()
+				&& middleBlock->getHitbox() > newBlock->getHitbox())
 			{
-				if(prevBlock->getHitbox() < newBlock->getHitbox())
-				{
-					//change the color if the block is larger than the left neighbor
-					int rgbVals[3];
-					rgbVals[0] = currentColor.r;
-					rgbVals[1] = currentColor.g;
-					rgbVals[2] = currentColor.b;
-
-					//add value to all colors, clamping at 255
-					for(int i = 0; i < 3; i++)
-					{
-						rgbVals[i] += 70;
-
-						//clamp
-						if(rgbVals[i] > 255)
-							rgbVals[i] = 255;
-					}
-
-					//reassign colors
-					currentColor.r = rgbVals[0];
-					currentColor.g = rgbVals[1];
-					currentColor.b = rgbVals[2];
-				}
-
-				else
-				{
-					//reset back to base color
-					currentColor = gameConstants::BLOCK_COLORS[y];
-				}
+				//change speed of the middle block
+				middleBlock->setColor(sf::Color::White);
+				middleBlock->setSpeed(currentSpeed + gameConstants::BLOCK_BALL_SPEED_INCREASE);
 			}
 
-			newBlock->setColor(currentColor);
 
 			//add block to the main vector
 			gameObjects.push_back(newBlock);
 
 			//update variables
 			usedWidth += width;
-			prevBlock = newBlock;
+			prevBlock = middleBlock;
+			middleBlock = newBlock;
 		}
 
 		//create the last block with the remaining width

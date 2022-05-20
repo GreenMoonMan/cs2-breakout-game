@@ -47,6 +47,12 @@ void Block::setColor(sf::Color color)
 }
 
 
+void Block::setSpeed(double speed)
+{
+	_newSpeed = speed;
+}
+
+
 bool Block::isDestroyed() const
 {
 	return _destroyed;

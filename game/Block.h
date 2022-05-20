@@ -16,6 +16,7 @@ class Block : public Collision
 
 		//methods
 		void setColor(sf::Color color);
+		void setSpeed(double speed);
 		bool isDestroyed() const;
 		double getSpeedNewSpeed() const;
 
