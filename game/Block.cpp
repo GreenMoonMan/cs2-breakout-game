@@ -26,7 +26,8 @@ Block::Block(Position position, Size size, double multiplier)
 
 
 Block::Block(const Block& copyObj)
-:	_newSpeed(copyObj._newSpeed), _destroyed(copyObj.isDestroyed()),
+:	Collision(copyObj.pos, copyObj.hitbox),
+	_newSpeed(copyObj._newSpeed), _destroyed(copyObj.isDestroyed()),
 	_blockShape(new sf::RectangleShape(*(copyObj._blockShape)))
 {
 	//account for the creation of a new block
