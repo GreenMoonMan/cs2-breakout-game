@@ -4,7 +4,9 @@
 #include "../Common.h"
 #include "../game/BreakoutGame.h"
 #include "ScoreBoard.h"
+#include "TextList.h"
 
+#include <SFML/Audio/Music.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -56,6 +58,7 @@ class Menu
 		//dynamic array of selectable text
 		sf::Text* menuText;
 
+		//for navigation
 		int currentSelection;
 		bool selectionMade;
 		bool escaped;
@@ -63,6 +66,11 @@ class Menu
 		//for game
 		BreakoutGame* game;
 		sf::Clock gameClock;
+
+		//for displaying credits
+		sf::Music music;
+		sf::Text creditsHeader;
+		TextList creditsList;
 
 		//private methods
 		void showMenu(int position);

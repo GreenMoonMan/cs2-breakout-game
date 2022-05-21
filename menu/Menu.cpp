@@ -9,6 +9,8 @@
 #include "../Physics.h"
 #include "../game/Block.h"
 #include "ScoreBoard.h"
+#include "TextList.h"
+#include "CreditsString.h"
 
 
 Menu::Menu(sf::RenderWindow& renderWindow, sf::Font& textFont)
@@ -16,7 +18,8 @@ Menu::Menu(sf::RenderWindow& renderWindow, sf::Font& textFont)
 	scoreboard(renderWindow, font, MenuConstants::SCORE_FILE_PATH),
 	menuText(new sf::Text[MENU_SIZE]),
 	currentSelection(0), selectionMade(false), escaped(false),
-	game(nullptr)
+	game(nullptr),
+	creditsList(renderWindow, textFont)
 {
 	//set up text font
 	for(int i = 0; i < MENU_SIZE; i++)
@@ -53,6 +56,8 @@ Menu::Menu(sf::RenderWindow& renderWindow, sf::Font& textFont)
 		//if this fails, just let an exception be thrown, there are other problems
 		scoreboard.readFile();
 	}
+
+	music.openFromFile("assets/theme.ogg");
 }
 
 
@@ -88,9 +93,21 @@ void Menu::down()
 
 void Menu::select()
 {
-	if(currentSelection == 0 && !selectionMade)
+	//run setup functions once if needed
+	if(!selectionMade)
 	{
-		playSetup();
+		switch (currentSelection)
+		{
+			case 0:
+				playSetup();
+				break;
+			
+			case 1:
+				break;
+			
+			case 2:
+				creditsSetup();
+		}
 	}
 
 	gameClock.restart();
@@ -248,8 +265,47 @@ bool Menu::scores()
 }
 
 
+void Menu::creditsSetup()
+{
+	Position headerPos(gameConstants::MAX_X/2, gameConstants::MAX_Y - 4);
+	Size headerHeight(0, 5);
+
+	//set up header for credits
+	creditsHeader.setFont(font);
+	creditsHeader.setString("CREDITS");
+	creditsHeader.setCharacterSize(headerHeight.transformToScreen().y);
+	creditsHeader.setOrigin(creditsHeader.getLocalBounds().width/2, creditsHeader.getLocalBounds().height/2);
+	creditsHeader.setPosition(headerPos.transformToScreen());
+	creditsHeader.setFillColor(sf::Color::Cyan);
+
+	//set up credits list
+	Position creditsPos(gameConstants::MAX_X/2, gameConstants::MAX_Y - 20);
+	Size creditsHeight(0, 2.5);
+
+	creditsList.sizeAndPosition(creditsHeight, creditsPos);
+	creditsList.setCentered(true);
+	creditsList.setVerticalSpace(2.5);
+	creditsList.setText(CREDITS_STRING, CREDITS_SIZE);
+	
+	//setup credits theme
+	music.setVolume(50);
+	music.play();
+}
+
+
 bool Menu::credits()
 {
-	return false;
+	if(!escaped)
+	{
+		renderWindow.draw(creditsHeader);
+		creditsList.display();
+		return true;
+	}
+
+	else  
+	{
+		music.stop();
+		return false;
+	}
 }
 
