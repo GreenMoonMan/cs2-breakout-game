@@ -13,6 +13,7 @@
 
 const bool GAMEPLAY_DEBUG = false;
 const bool INTERFACE_DEBUG = true;
+const unsigned MAX_FRAMERATE = 75*3;
 
 
 namespace gameConstants

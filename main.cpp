@@ -38,15 +38,11 @@ int main()
 	sf::RenderWindow renderWindow(sf::VideoMode(gameConstants::SCREEN_WIDTH, gameConstants::SCREEN_HEIGHT), "wow! much game!", sf::Style::Titlebar | sf::Style::Close);
 	sf::Event event;
 
-	renderWindow.setFramerateLimit(75*3);
-	// renderWindow.setVerticalSyncEnabled(true);
+	renderWindow.setFramerateLimit(MAX_FRAMERATE);
 
 	srand(time(0));
 
-	sf::Clock clock;
-
 	sf::Font font;
-	// font.loadFromFile("assets/Connection2.otf");
 
 	if(!font.loadFromFile(MenuConstants::FONT_FILE_PATH))
 	{
@@ -97,7 +93,6 @@ int main()
 		
 		mainMenu.update();
 
-		clock.restart();
 		renderWindow.display();
 	}
 
