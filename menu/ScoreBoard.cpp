@@ -1,4 +1,5 @@
 #include "ScoreBoard.h"
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <fstream>
 #include <ios>
@@ -21,6 +22,7 @@ ScoreBoard::ScoreBoard(sf::RenderWindow& window, sf::Font& font, std::string fil
 	Position headerPos(gameConstants::MAX_X/2, gameConstants::MAX_Y - 5);
 	Size headerHeight(0, 5);
 	_headerText.setCharacterSize(headerHeight.transformToScreen().y);
+	_headerText.setFillColor(sf::Color::Cyan);
 	
 	//set origin to center and position correctly
 	_headerText.setOrigin(_headerText.getLocalBounds().width/2, _headerText.getLocalBounds().height/2);

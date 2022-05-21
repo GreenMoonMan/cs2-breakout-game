@@ -159,7 +159,7 @@ void Menu::update()
 		{
 			std::string menuString;
 
-			menuText[i].setFillColor(sf::Color(20, 255, 90));
+			menuText[i].setFillColor(sf::Color(20, 255, 100));
 
 			//place cursor
 			if(currentSelection == i)
