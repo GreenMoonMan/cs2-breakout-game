@@ -4,6 +4,7 @@
 #include "Ball.h"
 #include "Collision.h"
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <cstddef>
 
 
@@ -21,6 +22,20 @@ Block::Block(Position position, Size size, double multiplier)
 	_blockShape->setOutlineColor(sf::Color::Black);
 	_blockShape->setOutlineThickness(1);
 	_numOfBlocks++;
+}
+
+
+Block::Block(const Block& copyObj)
+:	_newSpeed(copyObj._newSpeed), _destroyed(copyObj.isDestroyed()),
+	_blockShape(new sf::RectangleShape(*(copyObj._blockShape)))
+{
+	//account for the creation of a new block
+	_numOfBlocks++;
+
+	if(_destroyed)
+	{
+		_blocksDestroyed++;
+	}
 }
 
 

@@ -33,6 +33,7 @@ class Block : public Collision
 {
 	public:
 		Block(Position position, Size size, double speed);
+		Block(const Block& copyObj);
 		virtual ~Block();
 
 		//methods
