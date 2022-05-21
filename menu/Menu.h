@@ -11,6 +11,18 @@
 #include <SFML/System/Clock.hpp>
 
 
+/***************************************************************************************************
+* Menu
+*
+* displays the main menu for game
+* up(), down()... are used for navigation of the menu
+* 
+* update() must be called in a loop
+*
+* contains special functions that get called when a menu item is selected
+***************************************************************************************************/
+
+
 class Menu
 {
 	public:

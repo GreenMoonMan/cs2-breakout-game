@@ -10,6 +10,14 @@
 #include <string>
 
 
+/***************************************************************************************************
+* TextList
+*
+* takes in an array of strings and prints them out in a vertical list
+* with the first element being at the top and printing out going down
+***************************************************************************************************/
+
+
 class TextList
 {
 	public:
@@ -19,7 +27,7 @@ class TextList
 		void setText(std::string textArr[], const int size);
 		void sizeAndPosition(Size textHeight, Position topPos);
 		void setCentered(bool isCentered);
-		void setVerticalSpace(double space);
+		void setVerticalSpace(double space); //space between rows of text
 
 		void display();
 
