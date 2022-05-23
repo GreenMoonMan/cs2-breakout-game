@@ -67,3 +67,5 @@ The game finishes a bit abruptly, forwarding you directly to the high scores scr
 I tried playing this on a virtual machine, and although it was able to run, the performance of the game was exceptionally poor.
 This caused some strange physics bugs, such as the ball clipping through walls or the paddle.
 These bugs are not indicative of bare-metal performance.
+
+The file `checklist.txt` lists where all the needed techniques were used.
