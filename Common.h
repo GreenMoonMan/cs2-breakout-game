@@ -22,9 +22,7 @@ namespace gameConstants
 	const double MAX_Y = 90;
 
 	const unsigned SCREEN_WIDTH = 1600;
-	// const unsigned SCREEN_WIDTH = 1920;
 	const unsigned SCREEN_HEIGHT = 900;
-	// const unsigned SCREEN_HEIGHT = 1080;
 
 	//blocks
 	const int BLOCKS_ROWS = 4;
