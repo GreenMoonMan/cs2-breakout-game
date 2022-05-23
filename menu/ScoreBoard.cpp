@@ -232,7 +232,6 @@ void ScoreBoard::sortArray()
 
 bool ScoreBoard::searchForScore(int score)
 {
-	//TODO maybe convert to binary search since it is sorted
 	for(int i = 0; i < _numOfScores; i++)
 	{
 		if(_scoreArray[i] == score)

@@ -12,8 +12,8 @@
 
 
 const bool GAMEPLAY_DEBUG = false;
-const bool INTERFACE_DEBUG = true;
-const unsigned MAX_FRAMERATE = 75*3;
+const bool INTERFACE_DEBUG = false;
+const unsigned MAX_FRAMERATE = 75*2;
 
 
 namespace gameConstants
@@ -47,7 +47,7 @@ namespace gameConstants
 
 	//ball
 	const double BALL_DIAMETER = 2;
-	const double BALL_STARTING_SPEED = 70;
+	const double BALL_STARTING_SPEED = 65;
 	const double BALL_STARTING_X = 80;
 	const double BALL_STARTING_Y = 10;
 	const double BALL_LAUNCH_ANGLE_DEVIATION = 85;

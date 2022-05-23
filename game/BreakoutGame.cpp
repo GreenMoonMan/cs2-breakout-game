@@ -119,11 +119,11 @@ void BreakoutGame::run(const sf::Clock& clock)
 		//add bottomwall if debug
 		if(GAMEPLAY_DEBUG)
 		{
-			Wall tempWall = Wall(Wall::BOTTOM);
+			Wall tempWall(Wall::BOTTOM);
 			
 			if(checkCollision(ball, &tempWall))
 			{
-				// ball->collisionAction(&tempWall);
+				ball->collisionAction(&tempWall);
 			}
 		}
 
@@ -203,7 +203,6 @@ void BreakoutGame::display()
 
 	//display text
 	std::string scoreString = "SCORE: ";
-	//TODO maybe just use raw score value instead of the one combined with the balls
 	scoreString += std::to_string(getScore());
 	scoreText.setString(scoreString);
 	renderWindow.draw(scoreText);
